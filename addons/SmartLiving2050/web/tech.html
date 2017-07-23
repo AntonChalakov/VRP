@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="TODO:">
+    <meta name="author" content="TODO">
+    <link rel="icon" href="images/my-icons-collection/technician_imi.ico"> <!-- TODO: Testing. -->
+
+    <title>SmL 2050 (Technician)</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <!-- Our stylesheets.
+    ================================================== 
+    Order is important: Specific styles must be allowed to override generic/common styles. -->
+    <link  href="common.css" rel="stylesheet">
+    <link  href="tech.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    
+    <!-- Modal for Loading
+    ================================================== 
+    Progress bar borrowed from
+    https://myzeroorone.wordpress.com/2015/03/02/creating-simple-please-wait-dialog-with-twitter-bootstrap/
+      - awaidler, 2016-11-29     -->
+    <div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
+        role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span class="glyphicon glyphicon-time">
+                        </span>&nbsp;Please Wait
+                     </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info
+                        progress-bar-striped active"
+                        style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Page Header / NavBar
+    ================================================== -->
+    <div class="app-navbar">
+      <div id="navbar" class="container app-navbar-container">
+        <div id="navbar2" class="app-navbar-header">
+          <div class="row app-navbar-row">
+            <span class="app-navbar-headline">&nbsp;SmL 2050</span>
+            <span id="navbar-settings" class="app-navbar-config pull-right">
+              <span class="glyphicon glyphicon-cog"></span>
+            </span>
+          </div>
+          <ul class="row app-navbar-row">
+            <!-- Navbar content inserted by NavBar.js --> 
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Notifications
+    ================================================== -->
+    <div class="modal fade bs-example-modal-sm " id="myNotification" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+      <div class="modal-content">
+          <div class="modal-header app-modal">
+            <h4 class="modal-title app-color-darker">
+              <span class="glyphicon glyphicon-wrench"></span>
+              &nbsp;New Message
+            </h4>
+          </div>
+          <div class="modal-body app-modal">
+			      <span id="notification_desc"><!-- Inserted with JS -->ERROR: Description missing!</span>
+          </div>
+          <div class="modal-footer app-modal">
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn app-btn-1 btn-sm" data-dismiss="modal">Confirm</button>
+          </div>
+      </div>
+    </div>
+
+    <!-- Modal for Settings
+    ================================================== -->
+    <div class="modal fade bs-example-modal-sm " id="mySettings" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+      <div class="modal-content">
+          <div class="modal-header app-modal">
+            <h4 class="modal-title app-color-darker">
+              <span class="glyphicon glyphicon-cog"></span>
+              &nbsp;Settings
+            </h4>
+          </div>
+          <div class="modal-body app-modal">
+            <span> Connection status </span> <span id="settings_status" class="pull-right"> CONNECTED </span> <br>
+            <span> Session ID </span> <span id="settings_id" class="pull-right"><!-- Inserted with JS --></span> <br><br>
+
+            <div class="text-center">
+              <button id="settings-disconnect" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Disconnect device</button>
+              <button id="settings-language" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Change language</button>
+            </div>
+          </div>
+          <div class="modal-footer app-modal">
+            <button type="button" class="btn app-btn-1 btn-sm" data-dismiss="modal">Close Settings</button>
+          </div>
+      </div>
+    </div>    
+    
+    <!-- Page content
+    ================================================== -->
+    <!-- Menu and dashboards borrowed from Bootstrap's "dashboard" example (docs/examples/dashboard)   - awaidler, 2016-11-28 -->
+    <div class="container-fluid app-container">
+      <div class="row app-row">
+        <div id="dashboard">
+        </div>
+      </div>
+    </div> 
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- FIXME: Missing files. -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script> -->
+    <script src="jquery/jquery-3.1.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>-->
+    <script src="jquery/tether.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- Our scripts
+    ================================================== -->
+    <script src="tech.js"></script>
+  </body>
+</html>

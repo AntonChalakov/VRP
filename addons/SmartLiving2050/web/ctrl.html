@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<!--  general todos - jzehnter, 2016-12-05
+==================================================
+
+- Get better quality for https://d30y9cdsu7xlg0.cloudfront.net/png/3251-200.png
+- General design, especially responsive issues
+- Get new CSS-argument to center vertically (within table-cells and in general)          -->
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="TODO:">
+    <meta name="author" content="TODO">
+    <link rel="icon" href="images/my-icons-collection/spectator_blue.ico"> <!-- TODO: File missing. -->
+
+    <title>SmL 2050 (Control)</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Our stylesheets.
+         Order is important: Specific styles must be allowed to override
+         generic/common styles. -->
+    <link  href="common.css" rel="stylesheet">
+    <link  href="ctrl.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <!-- Progress bar borrowed from
+         https://myzeroorone.wordpress.com/2015/03/02/creating-simple-please-wait-dialog-with-twitter-bootstrap/
+         - awaidler, 2016-11-29
+    -->
+    <!-- Modal Start here-->
+    <div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
+        role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span class="glyphicon glyphicon-time">
+                        </span>&nbsp;Please Wait
+                     </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info
+                        progress-bar-striped active"
+                        style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal ends Here -->
+
+    <div id="navbar"></div>
+<br>
+
+    <!-- Sidebar left and page content
+    ================================================== -->
+    <!-- Menu and dashboards borrowed from Bootstrap's "dashboard" example (docs/examples/dashboard)   - awaidler, 2016-11-28 -->
+    <div class="container-fluid">
+      <div class="row">
+        <div id="sidebar" class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+          </ul>
+        </div>
+        <div id="dashboard" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- FIXME: Missing files. -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script> -->
+    <script src="jquery/jquery-3.1.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>-->
+    <script src="jquery/tether.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- Our scripts
+    ================================================== -->
+    <script src="ctrl.js"></script>
+  </body>
+</html>

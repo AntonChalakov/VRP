@@ -1,0 +1,113 @@
+<!--  TODO  - jz, 2017-01-07
+======================================================================
+
+- create CSS-styles (file needs to be included in framework) 
+- JavaScript functions
+- check reason of overlap with navbar  -> delete margin-top:70px;
+- get rid of &nbsp;   -->
+
+
+<div id="temperature"> 
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default app-panel">
+       <div class="panel-heading app-panel-heading"><strong>General</strong></div>
+        <div class="panel-body text-center">
+          <button type="button" class="btn btn-default btn-sm preset" id="button_preset"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;Preset</button>
+          <button type="button" class="btn btn-default btn-sm standby" id="button_standby"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>&nbsp;Standby</button>
+          <button type="button" class="btn btn-default btn-sm turn-off" id="button_turnoff"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Turn-Off</button>
+          <span class="hidden text-muted button_notification">
+            <br><br><strong>[&nbsp;<span class="glyphicon glyphicon-ok" aria-hidden="true">
+            </span>&nbsp;<span class="notification"></span>&nbsp;]</strong>
+          </span>
+        </div>
+      </div>
+
+
+      <div class="panel panel-default app-panel2">
+       <div class="panel-heading app-panel-heading"><strong>Overview</strong></div>
+        <table class="table app-table">
+          <tr>
+            <td>Living Room</td> &nbsp; 
+		<td><font color=#fc6e38>24°C</font></td>
+            <td class="living">
+              <span class="add glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              &nbsp;<span class="current"><!--inserted w/ JS--></span> °C&nbsp;
+              <span class="sub glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              <span class="text-muted pull-right"><span class="preset"><!--inserted w/ JS--></span>°C&nbsp;</span>
+              <span id="config_living" class="config pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;&nbsp;</span>
+            </td>
+          </tr>
+          <tr class="hidden config_living_row">
+            
+          </tr>
+          <tr>
+            <td>Kitchen</td>
+		<td><font color=#fc6e38>22°C</font></td>
+            <td class="kitchen">
+              <span class="add glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              &nbsp;<span class="current"><!--inserted w/ JS--></span> °C&nbsp;
+              <span class="sub glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              <span class="text-muted pull-right"><span class="preset"><!--inserted w/ JS--></span>°C&nbsp;</span>
+              <span class="pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;&nbsp;</span>
+            </td>
+          </tr>		
+          <tr>
+            <td>Bedroom</td>
+		<td><font color=#fc6e38>22°C</font></td>
+            <td class="bed">
+              <span class="add glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              &nbsp;<span class="current"><!--inserted w/ JS--></span> °C&nbsp;
+              <span class="sub glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              <span class="text-muted pull-right"><span class="preset"><!--inserted w/ JS--></span>°C&nbsp;</span>
+              <span class="pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;&nbsp;</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Bathroom</td>
+		<td><font color=#fc6e38>21°C</font></td>
+            <td class="bath">
+              <span class="add glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              &nbsp;<span class="current"><!--inserted w/ JS--></span> °C&nbsp;
+              <span class="sub glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              <span class="text-muted pull-right"><span class="preset"><!--inserted w/ JS--></span>°C&nbsp;</span>
+              <span class="pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;&nbsp;</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Hallway</td>
+		<td><font color=#fc6e38>19°C</font></td>
+            <td class="hallway">
+              <span class="add glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+              &nbsp;<span class="current"><!--inserted w/ JS--></span> °C&nbsp;
+              <span class="sub glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+              <span class="text-muted pull-right"><span class="preset"><!--inserted w/ JS--></span>°C&nbsp;</span>
+              <span class="pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;&nbsp;</span>
+            </td>
+          </tr>        </table>
+      </div>
+
+      <div class="panel panel-default hidden" style="margin-bottom:8px; margin-left:10px; margin-right:1px;">
+        <div class="panel-heading" style="padding: 6px 6px;"><span class="glyphicon glyphicon-cog text-muted" aria-hidden="true"></span>&nbsp;&nbsp;Kitchen</div>
+          <table class="table">
+          <tr>
+            <td>Preset</td>
+            <td>
+              <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>&nbsp;
+              23 °C&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>Standby</td>
+            <td>
+              <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>&nbsp;
+              15 °C&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+
+    </div>
+  </div>
+</div>

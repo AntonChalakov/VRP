@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.78.0 commit date:2016-10-24, commit time:12:20, hash:e8299c8</authoring_tool>
+    </contributor>
+    <created>2017-01-23T11:49:07</created>
+    <modified>2017-01-23T11:49:07</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="DoorFrame-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.09850387 0.07672989 0.04155436 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.3993774 0.1362015 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="DoorFrame-material" name="DoorFrame">
+      <instance_effect url="#DoorFrame-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="DoorFrameGeom-mesh" name="DoorFrameGeom">
+      <mesh>
+        <source id="DoorFrameGeom-mesh-positions">
+          <float_array id="DoorFrameGeom-mesh-positions-array" count="48">-0.4799997 0 -0.1349999 0.4799997 0 -0.1349999 0.4799997 0 0.1349999 -0.4799999 0 0.1349998 -0.4799996 2.04 -0.135 0.4799999 2.04 -0.1349998 0.4799995 2.04 0.135 -0.4799998 2.04 0.1349999 0.42 0 0.1349999 -0.42 0 0.1349998 -0.4200001 1.98 0.1349999 -0.4200001 1.98 -0.135 -0.42 0 -0.1349999 0.4199998 1.98 0.135 0.4199998 1.98 -0.1349997 0.42 0 -0.1349999</float_array>
+          <technique_common>
+            <accessor source="#DoorFrameGeom-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="DoorFrameGeom-mesh-normals">
+          <float_array id="DoorFrameGeom-mesh-normals-array" count="81">0 -1 0 0 1 -5.97887e-7 2.95656e-7 -1.95136e-7 -1 1 0 3.31137e-7 0 -1.77394e-7 1 -1 0 -9.93411e-7 1 0 0 0 -1 0 0 -1 0 -1 0 0 0 -1 0 0 1 9.19826e-7 0 0 -1 -9.73931e-7 0 -1 0 0 -1 4.8697e-7 0 -1 2.26363e-7 -1.45907e-6 -1 1 0 1.65569e-6 0 0 1 -4.86968e-7 0 1 0 0 1 -4.86969e-7 0 1 -1.2935e-7 6.20881e-7 1 -1 0 -6.62274e-7 1 0 0 0 -1 0 -1 0 0</float_array>
+          <technique_common>
+            <accessor source="#DoorFrameGeom-mesh-normals-array" count="27" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="DoorFrameGeom-mesh-vertices">
+          <input semantic="POSITION" source="#DoorFrameGeom-mesh-positions"/>
+        </vertices>
+        <polylist material="DoorFrame-material" count="28">
+          <input semantic="VERTEX" source="#DoorFrameGeom-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#DoorFrameGeom-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>0 0 9 0 3 0 4 1 6 1 5 1 4 2 14 2 11 2 5 3 2 3 1 3 6 4 10 4 13 4 0 5 7 5 4 5 11 6 9 6 12 6 15 7 2 7 8 7 14 8 10 8 11 8 14 9 8 9 13 9 0 10 12 10 9 10 4 11 7 11 6 11 12 12 0 12 11 12 5 13 1 13 14 13 1 14 15 14 14 14 11 15 0 15 4 15 5 16 14 16 4 16 5 17 6 17 2 17 8 18 2 18 13 18 7 19 3 19 10 19 3 20 9 20 10 20 13 21 2 21 6 21 7 22 10 22 6 22 0 23 3 23 7 23 11 24 10 24 9 24 15 25 1 25 2 25 14 8 13 8 10 8 14 26 15 26 8 26</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="DoorFrame" name="DoorFrame" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#DoorFrameGeom-mesh" name="DoorFrame">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="DoorFrame-material" target="#DoorFrame-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

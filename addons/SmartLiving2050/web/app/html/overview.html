@@ -1,0 +1,63 @@
+<div id="overview"> 
+  <div class="row app-row">
+    <div class="col-xs-12 app-row">
+        <div class="panel panel-default app-panel app-timebox">  
+          <div class="panel-heading app-panel-heading text-center"><strong> Time</strong></div>
+            <table class="table app-table">
+              <tr><td><div id="time_overview" class="text-center"><!-- time inserted w/ JS -->ERROR: Time</div></td></tr>
+            </table>
+      </div>
+      
+      <div class="panel panel-default app-panel2">
+       <div class="panel-heading app-panel-heading"><strong>Current Events</strong></div>
+        <ul class="list-group" id="insert_current_overview">
+          <li id="empty_current_overview" class="list-group-item">No current events </li> <!-- gets hidden w/ JS, if first item is inserted --> 
+        </ul>
+      </div>
+
+      <div class="panel panel-default app-panel2">
+        <div class="panel-heading app-panel-heading"><strong>Temperature</strong></div>
+          <table class="table app-table" >
+            <tr>
+              <td>Living Room</td>
+              <td style="text-align: right;">24 °C</td>  <!-- TODO: CSS --> 
+            </tr>
+            <tr>
+              <td>Kitchen</td>
+              <td style="text-align: right;">22 °C</td>
+            </tr>
+            <tr>
+              <td>Bedroom</td>
+              <td style="text-align: right;">22 °C</td>
+            </tr>
+			<tr>
+              <td>Bathroom</td>
+              <td style="text-align: right;">21 °C</td>
+            </tr>
+            <tr>
+              <td>Hallway</td>
+              <td style="text-align: right;">19 °C</td>
+            </tr>
+          </table>
+        </div>
+      
+      
+        <div class="panel panel-default app-panel2">
+          <div class="panel-heading app-panel-heading"><strong> Energy Consumption</strong></div>
+          <table class="table app-table">
+            <tr>
+              <td>Consumption</td>
+              <td style="text-align: right;">1107 kWh</td>  <!-- TODO: CSS --> 
+            </tr>
+            <tr>
+              <tr>
+              <td>Cost</td>
+              <td style="text-align: right;">318.82 €</td>
+            </tr>
+          </table>
+        </div>
+      
+      
+    </div>
+  </div>
+</div>

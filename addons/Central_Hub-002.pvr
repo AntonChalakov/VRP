@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene name_suffix="0" base_name="Central_Hub" name_space="Scene" loading_time="12586">
+  <Objects>
+    <Object base_name="Root" name_space="__global__" name_suffix="0" persistency="666" pickable="0" type="Object" unique="1" visible="1">
+      <Object ambient="0.3 0.3 0.3 1" base_name="light" beacon="Headlight_beacon.1" diffuse="1 1 1 1" lightType="point" name_space="__global__" name_suffix="0" on="1" persistency="666" pickable="0" shadow="0" shadowColor="0.1 0.1 0.1 1" shadowMapRes="2048" specular="0.0999924 0.0999924 0.0999924 0" type="Light" unique="1" visible="1">
+        <Object accept_root="1" aspect="1" at="-1.24949 1.41418 -4.23" at_dir="0" base_name="Default" far="512" fov="1.0472" from="-0.660212 1.49682 -3.52899" name_space="__global__" name_suffix="1" near="0.1" persistency="666" pickable="0" scale="1 1 1" type="Camera" unique="1" up="0 0.999984 0" visible="1">
+          <Object at="0 0 -1" at_dir="1" base_name="Headlight_beacon" from="0 0 0" light="light" name_space="__global__" name_suffix="1" persistency="666" pickable="0" scale="1 1 1" type="LightBeacon" unique="1" up="0 1 0" visible="1">
+            <constraint active="1" cR="0 1 0" cR_local="0" cR_mode="0" cT="0 1 0" cT_local="0" cT_mode="0" persistency="666"/>
+          </Object>
+          <constraint active="0" cR="0 1 0" cR_local="0" cR_mode="0" cT="1 1 1" cT_local="0" cT_mode="1" persistency="666"/>
+        </Object>
+        <Object at="0 0 -1" at_dir="1" base_name="Clocks" from="0 0 0" name_space="__global__" name_suffix="0" persistency="666" pickable="0" scale="1 1 1" type="Transform" unique="1" up="0 1 0" visible="1">
+          <constraint active="1" cR="0 1 0" cR_local="0" cR_mode="0" cT="0 1 0" cT_local="0" cT_mode="0" persistency="666"/>
+        </Object>
+      </Object>
+    </Object>
+  </Objects>
+  <Rendering deferred_rendering="0" frustum_culling="1" fxaa="0" hmdd="0" marker="0" occlusion_culling="0" persistency="666" ssao="0" ssao_kernel="4" ssao_noise="4" ssao_radius="0.02" two_sided="1"/>
+  <Scripts persistency="666">
+    <Script base_name="camera" group="no group" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	if not hasattr(VR, 'cameraFixedDir'):
+		VR.cameraFixedDir = True
+	if not hasattr(VR, 'cameraFixedHeight'):
+		VR.cameraFixedHeight = True
+	
+	cam = VR.find('Default.1')
+	if VR.cameraFixedDir:
+		direction = cam.getDir()
+		cam.setDir([direction[0],0,direction[2]])
+	if VR.cameraFixedHeight:
+		pos = cam.getFrom()
+		cam.setFrom([pos[0],1.5,pos[2]])
+	#cam.setUp([0,1,0])
+	
+</core>
+    </Script>
+    <Script base_name="changeRole" group="input" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	key = dev.getKey()
+	if key == ord("1") or key == 4:
+		VR.setRole(42)
+	elif key == ord("2") or key == 3:
+		VR.setRole(100)
+</core>
+      <trig type="on_device" dev="keyboard" state="Pressed" param="" key="-1" name_suffix="1" base_name="trigger" name_space="__global__"/>
+      <trig type="on_device" dev="flystick" state="Pressed" param="" key="-1" name_suffix="12" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="click" group="input" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	# Script for main actions (mouse left click, trigger flystick)
+	# Opens/closes doors. Breaks/repairs devices
+	
+	dev.intersect()
+	i = dev.getIntersected()
+	
+	if i:
+		for door in VR.hub.doors:
+			if i == door.transform.getChild(0):
+				VR.hub.eventDoorToggle(VR.CameraId, door)
+		for device in VR.hub.devices():
+			#TODO: Tenants should not be able to repair
+			if i == device._geometry and ( device.is_ok() or VR.CameraId == 100): 
+				device.toggle_ok()
+</core>
+      <trig type="on_device" dev="mouse" state="Pressed" param="" key="0" name_suffix="5" base_name="trigger" name_space="__global__"/>
+      <trig type="on_device" dev="flystick" state="Pressed" param="" key="0" name_suffix="6" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="clock" group="timers" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+
+	dev = VR.find('server1')
+
+	VR.hub.clock.inc();
+	for key in VR.hub.clocks:
+		dev.answer(key, VR.hub.clock.string)
+</core>
+      <trig type="on_timeout" dev="" state="Pressed" param="1000" key="0" name_suffix="3" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="createBordcomputer" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	light = True
+	m = dev.getMessage()
+	if(m == 'TIMETOPARTY!'):
+		for room in VR.hub.rooms:
+			for lamp in room.lamps:
+				lamp.switchOn()
+	if(m == 'TIMETOPARTY2!'):
+		for room in VR.hub.rooms:
+			for lamp in room.lamps:	
+				lamp.toggle()
+	if(m == 'Toggle Doors!'):
+		for door in VR.hub.doors:
+			door.toggle()		
+	if(m == 'Find The Person!'):
+		for room in VR.hub.rooms:
+			for ids in room.presentIds:
+				print ids
+				print room.name
+	dev.answer(dev.getKey(), 'FUCK YOU !')  
+</core>
+      <trig type="on_device" dev="server1" state="Released" param="" key="-1" name_suffix="11" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="createDoors" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	from core.Door import Door, MainDoor
+	from core.AccessGroup import doors
+	
+	for i in reversed(range(len(VR.doors))):
+		VR.doors[i].destroy()
+	VR.doors = []
+	VR.hub.doors = []
+	
+	doorPos= {
+		"Main": ([-1.14,1.69,3.25],[0,0,-1],"left"),
+		"HW1_LR": ([-0.72,1,0.12],[0,0,-1],"left"),
+		"LR_Ki": ([-3.8,1,-4.36],[0,0,-1],"right"),
+		"LR_HW2": ([0.12,1,-3.35],[1,0,0],"right"),
+		"HW2_BaR": ([0.12,1,-5],[-1,0,0],"right"),
+		"HW2_GBR": ([0.92,1,-5.605],[0,0,-1],"right"),
+		"HW2_BeR": ([1.77,1,-4.2],[1,0,0],"left"),
+		"HW2_KR": ([0.92,1,-2.71],[0,0,1],"left"),
+		"Balcony": ([-4.43,1.18,-0.92],[-1,0,0],"right")
+	}
+	
+	root = VR.find("Scene")
+	
+	# Main Door
+	doorParent = VR.Transform("Door_Main")
+	doorParent.setPose(doorPos["Main"][0], doorPos["Main"][1], [0,1,0])
+	root.addChild(doorParent)
+	
+	door = VR.loadGeometry('./assets/door-006.dae')
+	door.setPose([0,0,0], [0,0,-1], [0,1,0])
+	doorParent.addChild(door)
+	
+	frame = VR.loadGeometry('./assets/doorFrame.dae', preset='COLLADA')
+	frame = frame.getChild(0).getChild(0)
+	frame.setPose([0.425,-1.69,0], [0,0,-1], [0,1,0])
+	doorParent.addChild(frame)
+	
+	VR.hub.addDoor(MainDoor("Main", door, doorPos["Main"][2]), True)
+	VR.doors.append(doorParent)
+	
+	# Create template for sliding glass doors
+	baseDoorParent = VR.Transform("Door_Base")
+	
+	door = VR.Transform("Transf_Base")
+	door.setPose([0,0,0], [0,0,-1], [0,1,0])
+	baseDoorParent.addChild(door)
+
+	frame = VR.loadGeometry('./assets/doorFrame.dae', preset='COLLADA')
+	frame = frame.getChild(0).getChild(0)
+	frame.setPose([0,-1,0], [0,0,-1], [0,1,0])
+	baseDoorParent.addChild(frame)
+
+	doorGeom = VR.Geometry("DoorGeom_Base")
+	doorGeom.setPrimitive("Box 0.84 2 0.05 1 1 1")
+	doorGeom.setPose([0,0,0],[0,0,1],[0,1,0])
+	doorGeom.setMaterial(VR.materials["Glassdoor unlocked"])
+	door.addChild(doorGeom)
+	
+	# Create each specified door
+	for d in doorPos:
+		if d == "Main" or d == "Balcony":
+			continue
+		
+		doorParent = baseDoorParent.duplicate()
+		doorParent.setName("Door_" + d)
+		doorParent.setPose(doorPos[d][0], doorPos[d][1],[0,1,0])
+		root.addChild(doorParent)
+		
+		door = doorParent.getChild(0)
+		door.setName("Transf_" + d)
+		door.getChild(0).setName("Geom_" + d)
+		
+		doorParent.getChild(1).setName("FrameGeom_" + d)
+		
+		VR.hub.addDoor(Door(d, door, True, doorPos[d][2]), False)
+		VR.doors.append(doorParent)	
+		
+	# Balcony Door
+	doorParent = VR.Transform("Door_Balcony")
+	doorParent.setPose(doorPos["Balcony"][0], doorPos["Balcony"][1],[0,1,0])
+	VR.find("Livingroom").addChild(doorParent)
+	
+	door = VR.Transform("Transf_Balcony")
+	door.setPose([0,-0.05,0], [0,0,-1], [0,1,0])
+	doorParent.addChild(door)
+	
+	frame = VR.loadGeometry('./assets/doorFrame_balcony.dae', preset='COLLADA')
+	frame = frame.getChild(0).getChild(0)
+	frame.setPose([0,0,0], [0,0,-1], [0,1,0])
+	frame.setName("FrameGeom_Balcony")
+	doorParent.addChild(frame)
+	
+	doorGeom = VR.Geometry("DoorGeom_Balcony")
+	doorGeom.setPrimitive("Box 0.55 2 0.05 1 1 1")
+	doorGeom.setPose([0,0,0],[0,0,1],[0,1,0])
+	doorGeom.setMaterial(VR.materials["Glassdoor unlocked"])
+	door.addChild(doorGeom)
+	
+	VR.hub.addDoor(Door("Balcony", door, True, doorPos["Balcony"][2], 0.55), False)
+	VR.doors.append(doorParent)
+</core>
+    </Script>
+    <Script base_name="createSensor" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	from core.PresenceSensor import PresenceSensor
+	
+	minX = 9999999
+	maxX = -9999999
+	minZ = 9999999
+	maxZ = -9999999
+	
+	
+	for pos in room.transform.getChild(2).getPositions():
+		minX = min(minX, pos[0])
+		maxX = max(maxX, pos[0])
+		minZ = min(minZ, pos[2])
+		maxZ = max(maxZ, pos[2])
+		
+	sizeX = maxX - minX
+	sizeZ = maxZ - minZ
+	
+	pos = room.transform.getFrom()
+		
+	sensor = PresenceSensor(room.name, sizeX, 2.7, sizeZ, pos[0], 1.2, pos[2], room.eventPresenceChange)#VR.hub.sEntranceEvent)
+	VR.presenceSensors.append(sensor)
+</core>
+      <arg type="int" value="" name_suffix="0" base_name="room" name_space="createSensor"/>
+      <trig type="none" dev="" state="Pressed" param="" key="0" name_suffix="5" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="events" group="timers" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	for event in reversed(VR.timedEvents):
+		event.update(0.1)
+		if event.lifetime &lt;= 0:
+			VR.timedEvents.remove(event)
+</core>
+      <trig type="on_timeout" dev="" state="Pressed" param="100" key="0" name_suffix="7" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="init" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	from core.Door import Door, MainDoor
+	from core.Hub import Hub
+	from core.Lamp import Lamp
+	from core.PresenceSensor import PresenceSensor
+	from core.Radiator import Radiator
+	from core.Room import Room
+	from middleware.PolyVrMiddlewareAdapter import PolyVrMiddlewareAdapter
+	
+	# Prepare lists
+	VR.presenceSensors = []
+	VR.timedEvents = []
+	VR.roofs = []
+	
+	# Dim light of first person camera
+	VR.find('light').setAttenuation([2,0,0])
+	
+	if hasattr(VR, 'Scene'): VR.Scene.destroy()
+	VR.Scene = VR.Object('Scene')
+	VR.find('light').addChild(VR.Scene)
+	root = VR.Scene
+	
+	VR.hub = Hub()
+	VR.mw = PolyVrMiddlewareAdapter(VR.hub)
+	
+	VR.initPeople()
+	VR.initMaterials()
+	
+	#Load Bordcomputer
+	bordcomputer = VR.Sprite("asdadas")
+	bordcomputer.setPose([-1.7,1.5,-4.23],[0,0,1],[0,-1,1])
+	bordcomputer.setSize(2,2)
+	bordcomputer.webOpen('http://localhost:5500/web/bordcomputer.html', 1000, 2)
+	VR.Scene.addChild(bordcomputer)
+	
+	# Load Apartment
+	apartment = VR.loadGeometry('assets/Grundriss_MaxM_v6.dae')
+	root.addChild(apartment)
+	apartment.setPose([0,0,0],[0,0,-1],[0,1,0])
+	apartment.setScale(1,1,1)
+	
+	
+	
+	roomNames = ["Hallway1", "Hallway2", "Livingroom", "Kitchen",
+				 "Bathroom", "GuestBathR", "Bedroom", "KidsRoom"]
+				 
+	wallMat = VR.materials["Wall Color"]
+	for idx, name in enumerate(roomNames):
+		roomTransform = VR.find(name)
+		#roomTransform.getChild(0).setMaterial(wallMat)
+		#roomTransform.getChild(1).setMaterial(wallMat)
+		VR.roofs.append(roomTransform.getChild(0))
+		
+		room = Room(name, roomTransform)
+		VR.hub.addRoom(room)
+		VR.createSensor(room)
+		
+		newLight = VR.Light("Light_"+name)
+		newLight.setOn(False)
+		newLight.setAttenuation([1,0.02,0.01])
+		newLight.setDiffuse([0.99,0.99,0.9,1.0])
+		roomTransform.getParent().addChild(newLight)
+		roomTransform.switchParent(newLight)
+		
+		room.addLamp(Lamp("LAMP"+str(idx), name, roomTransform, newLight))
+
+	VR.loadRadiators()
+</core>
+      <arg type="VRPyTransformType" value="Clocks" name_suffix="0" base_name="clocks" name_space="init"/>
+      <trig type="on_scene_load" dev="" state="Pressed" param="" key="-1" name_suffix="0" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="init2" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	VR.doors = []
+	VR.createDoors()
+	
+	VR.furniture = []
+	VR.loadFurniture()
+</core>
+      <trig type="on_scene_load" dev="" state="Pressed" param="" key="0" name_suffix="8" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="initMaterials" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	VR.materials = {}
+	
+	mat = VR.Material("Working Device")
+	mat.setAmbient(0.2,0.4,0.2)
+	mat.setDiffuse(0.8,1.0,0.8)
+	mat.setSpecular(1.0,1.0,1.0)
+	VR.materials[mat.getName()] = mat
+
+	mat = VR.Material("Broken Device")
+	mat.setAmbient(0.4,0.2,0.2)
+	mat.setDiffuse(0.9,0.3,0.3)
+	mat.setSpecular(1.0,1.0,1.0)
+	VR.materials[mat.getName()] = mat
+	
+	mat = VR.Material("Working Radiator")
+	mat.setAmbient(0.2,0.4,0.2)
+	mat.setDiffuse(0.8,1.0,0.8)
+	mat.setSpecular(1.0,1.0,1.0)
+	VR.materials[mat.getName()] = mat
+
+	mat = VR.Material("Broken Radiator")
+	mat.setAmbient(0.4,0.2,0.2)
+	mat.setDiffuse(0.9,0.3,0.3)
+	mat.setSpecular(1.0,1.0,1.0)
+	VR.materials[mat.getName()] = mat
+	
+	mat = VR.Material("Glassdoor unlocked")
+	mat.setAmbient(0.3,0.3,0.3)
+	mat.setDiffuse(0.8,0.8,0.9)
+	mat.setSpecular(0.99,0.99,0.99)
+	mat.setTransparency(0.6)
+	VR.materials[mat.getName()] = mat
+	
+	mat = VR.Material("Glassdoor locked")
+	mat.setAmbient(0.5,0.2,0.2)
+	mat.setDiffuse(0.9,0.8,0.8)
+	mat.setSpecular(0.99,0.99,0.99)
+	mat.setTransparency(0.99)
+	VR.materials[mat.getName()] = mat
+	
+	mat = VR.Material("Lamp Cord")
+	mat.setAmbient(0.0,0.0,0.0)
+	mat.setDiffuse(0.1,0.1,0.1)
+	mat.setSpecular(0.6,0.6,0.6)
+	VR.materials[mat.getName()] = mat
+
+	mat = VR.Material("Light Bulb off")
+	mat.setAmbient(0.3,0.3,0.3)
+	mat.setDiffuse(0.8,0.8,0.8)
+	mat.setSpecular(1.0,1.0,1.0)
+	mat.setTransparency(0.5)
+	VR.materials[mat.getName()] = mat
+
+	mat = VR.Material("Light Bulb on")
+	mat.setAmbient(1.0,1.0,0.8)
+	mat.setDiffuse(1.0,1.0,0.8)
+	mat.setSpecular(1.0,1.0,0.8)
+	mat.setTransparency(0.8)
+	VR.materials[mat.getName()] = mat
+	
+	mat = VR.Material("Wall Color")
+	mat.setAmbient(0.2,0.2,0.2)
+	mat.setDiffuse(0.999,0.973,0.863)
+	mat.setSpecular(0.999,0.973,0.863)
+	VR.materials[mat.getName()] = mat
+	
+	mat = VR.Material("GlassTable")
+	mat.setAmbient(0.4,0.4,0.4)
+	mat.setDiffuse(0.8,0.8,0.8)
+	mat.setSpecular(1,1,1)
+	mat.setTransparency(0.3)
+	VR.materials[mat.getName()] = mat
+</core>
+    </Script>
+    <Script base_name="initPeople" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	from core.Person import Person
+	from core.AccessGroup import AccessGroup
+	
+	# Create tenant group and default character
+	tenantGroup = AccessGroup("Tenants", True)
+	VR.hub.accessGroups["Tenants"] = tenantGroup
+	tenant = Person(42, tenantGroup, "Jochen Mustermieter")
+	VR.hub.persons[42] = tenant
+	
+	VR.CameraId = 42
+</core>
+    </Script>
+    <Script base_name="keyboardControl" group="input" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	key = dev.getKey()
+	
+	if key == ord("p"):
+		VR.hub.printLog()
+	elif key == ord("y"):
+		#Break radiator in bedroom
+		VR.hub.rooms[6].radiators[0].set_broken()
+	elif key == ord("x"):
+		#Repair radiator in bedroom
+		VR.hub.rooms[6].radiators[0].set_repaired()
+	elif key == ord("c"):
+		#Toggle cam fixed direction
+		if VR.cameraFixedDir == True:
+			VR.cameraFixedDir = False
+		else:
+			VR.cameraFixedDir = True
+	elif key == ord("v"):
+		#Toggle cam fixed height
+		if VR.cameraFixedHeight == True:
+			VR.cameraFixedDir = False
+			VR.cameraFixedHeight = False
+		else:
+			VR.cameraFixedHeight = True
+	elif key == ord("r"):
+		for roof in VR.roofs:
+			roof.setVisible(not roof.isVisible())
+</core>
+      <trig type="on_device" dev="keyboard" state="Pressed" param="" key="-1" name_suffix="13" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="loadFurniture" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	''' Contains the logic for import and placement of all furniture
+	in the apartment. Script is invoked by init-script. '''
+
+	import VR
+	
+	# Small helper class to hold the required information of each piece of furniture
+	class Furniture:
+		def __init__(self, position, direction, scale):
+			self.pos = position
+			self.dir = direction
+			self.scale = scale
+			
+	# Deletes all existing furniture prior to execution, 
+	# to avoid multiple instances 
+	for i in reversed(range(len(VR.furniture))):
+		VR.furniture[i].destroy()
+	VR.furniture = []
+	
+	# Each entry of this dictionary contains a list of furniture in
+	# the stated room.
+	# ADD NEW FURNITURE HERE
+	furnishing = {
+		"Hallway1": {
+		"tatami": Furniture([0,0.01,0],[0,0,-1],[0.05,1,0.1]),
+		},
+		"Hallway2": {},
+		"Livingroom": {
+			#"couch": Furniture([-4,0,1.35],[-0.4,0,1],[1,1,1]),
+			"sofa": Furniture([-1,1.338,0.9],[0,0,1],[0.6,0.6,0.6]),
+			"couchtable": Furniture([-1.8,0,-0.5],[0,0,-1],[0.7,0.7,0.7]),
+			"billyShelf": Furniture([0.25,0,2.12],[0,0,1],[1,1,1]),
+			"ficus": Furniture([-4,0,-1.9],[0,0,1],[0.15,0.15,0.15]),
+			"rug": Furniture([-0.4,1.257,-0.2],[0,0,-1],[1,1,1]),
+			"coffeeTable": Furniture([4.1,0.22,-0.4],[0,0,-1],[0.25,0.25,0.25]),
+			"window": Furniture([-4.44,1.38,0.53],[1,0,0],[1,1,1]),
+			"TV Wand": Furniture([-3,0.5,-2.12],[0,0,-1],[1.3,1.3,1]),
+			"Verstärker": Furniture([0.65,0.84,2],[1,-90,0],[0.2,0.4,0.35]),
+			"Lautsprecher": Furniture([-0.9,0,2],[0,-90,1],[0.15,0.15,0.15]),
+			"Lautsprecher_2": Furniture([-3.82,0,1.86],[-1,-90,1],[0.15,0.15,0.15])
+		},
+		"Kitchen": {
+			"window": Furniture([-2.884,1.404,0.157],[-1,0,0],[1,1,1]),
+			"Kitchen_Flo2": Furniture([-0.754,0,-1.15],[0,0,-1],[0.885,0.89,0.89]),
+			"Fridge": Furniture([1.58,0,-1.15],[0,0,-1],[1,1,1]),
+			#"fruits": Furniture([-0.9,1.04,-0.92],[0,0,-1],[1,1,1]),
+			#fruit basket is too detailed, takes about 2-3 sec to load
+			"Regal": Furniture([2.25,0,-1],[0,0,-1],[0.9,0.9,0.9])
+		},
+		"Bathroom": {
+			"Badewanne": Furniture([-1.44,0,0.93],[-1,0,0],[1.03,1.33,1]),
+			"Duscharmatur": Furniture([-1.44,1.1,0],[-1,0,0],[0.4,0.4,0.4]),
+			"Waschbecken": Furniture([-0.3,1,-0.931],[0,0,-0.01],[0.08,0.08,0.08]),
+			"Toilette" : Furniture([1.05,0,-0.931],[0,0,-0.01],[0.6,0.6,0.6]),
+			"WaMa" : Furniture([0.35,0,-0.68],[0,0,-0.01],[0.14,0.14,0.14])},
+		"GuestBathR": {
+			"Toilette" : Furniture([-0.3,0,-0.71],[0,0,-0.01],[0.6,0.6,0.6]),
+			"Waschbecken2" : Furniture([0.3,0.9,-0.71],[0,0,-0.01],[0.1,0.1,0.1])},
+		"Bedroom": {
+			"malmBed": Furniture([-1.35,0,-1.77],[0,0,-1],[1,1,1]),
+			"smallTable": Furniture([-1.65,0,-1.77],[0,0,-1],[1,1,1]),
+			"window": Furniture([2.58,1.55,0.75],[1,0,0],[1.09,0.94,1]),
+			"ballchair": Furniture([1.3,0.583,1],[-1,0,-1],[0.4,0.4,0.4]),
+			"mirror": Furniture([-0.4,1.3,1],[0,0,-1],[0.3,0.3,0.3]),
+			"plant": Furniture([-1.9,0.44,-1.5],[1,-90,0],[0.8,0.8,0.8])
+		},
+		"KidsRoom": {
+			"paxRegal": Furniture([-0.5,0,1.6],[0,0,1],[1,1,1]),
+			"window": Furniture([2.48,1.52,0.1],[1,0,0],[1,1,1]),
+			"painting": Furniture([-0.3,1.7,-1.5],[1,0,0],[0.2,0.2,0.2]),
+			"bubblechair": Furniture([-1.7,0.9,2],[0,0,1],[0.6,0.6,0.6]),
+			"desk_1": Furniture([-1,0,-1.5],[1,-90,0],[0.4,0.4,0.4]),
+			"plant": Furniture([1.4,0,-0.8],[1,-90,0],[0.25,0.25,0.25])
+		}		
+	}
+	
+	path = ""
+	for roomName in furnishing:
+		room = furnishing[roomName]
+		vrRoom = VR.find(roomName)
+		
+		for itemName in room:
+			item = room[itemName]
+			path = './assets/' + roomName + '/' + itemName + '.dae'
+			furniture = VR.loadGeometry(path, preset="COLLADA")
+			furniture.setPose(item.pos, item.dir, [0,1,0])
+			furniture.setScale(item.scale)
+			vrRoom.addChild(furniture)
+			VR.furniture.append(furniture)
+			
+	# If special operations for a single piece of furniture are required, add them here.
+	tableTop = VR.find("./assets/Livingroom/couchtable.dae").getChild(0).getChild(0).getChild(0).getChild(1)
+	tableTop.setMaterial(VR.materials["GlassTable"])
+</core>
+    </Script>
+    <Script base_name="loadRadiators" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	from core.Radiator import Radiator
+	
+	for room in VR.hub.rooms:
+		for radiator in reversed(room.radiators):
+			radiator.transform.destroy()
+		room.radiators = []
+
+	radiatorLR = Radiator("RADIATOR0", "Livingroom", [-4.15,0.3,0.55], [1,0,0], [1.18, 1.33, 0.5])
+	radiatorK = Radiator("RADIATOR1", "Kitchen", [-2.55,0.4,0.14], [1,0,0], [1.2, 1, 1])
+	radiatorBR = Radiator("RADIATOR2", "Bedroom", [2.2,0.4,0.75], [1,0,0], [0.76, 1, 1])
+	radiatorKR = Radiator("RADIATOR3", "KidsRoom", [2.095,0.4,0.1], [1,0,0], [1.3, 1, 1])
+	VR.hub.rooms[2].radiators.append(radiatorLR)
+	VR.hub.rooms[3].radiators.append(radiatorK)
+	VR.hub.rooms[6].radiators.append(radiatorBR)
+	VR.hub.rooms[7].radiators.append(radiatorKR)
+</core>
+    </Script>
+    <Script base_name="nav_jump" group="navi" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	cam = VR.find('Default.1')
+	cp = cam.getFrom()
+	cp2 = cp[:]
+	cp2[1] += 1
+	
+	p = VR.Path()
+	p.addPoint(cp, [0,1,0], [0,0,0], [1,0,0])
+	p.addPoint(cp2, [0,1,0], [0,0,0], [1,0,0])
+	p.addPoint(cp, [0,-1,0], [0,0,0], [1,0,0])
+	p.compute(20)
+	
+	cam.animate(p, 1, 0, False)
+</core>
+      <trig type="on_device" dev="keyboard" state="Pressed" param="" key="32" name_suffix="10" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="presence_sensors" group="timers" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+
+	for s in VR.presenceSensors:
+		s.test(VR.find('Default.1'))
+</core>
+      <trig type="on_timeout" dev="" state="Pressed" param="100" key="0" name_suffix="4" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="setRole" group="" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	cam = VR.find('Default.1')
+	cam.setFrom([-0.5,1.5,5])
+	cam.setDir([0,0,-1])
+	
+	oldId = VR.CameraId
+	
+	if oldId in VR.hub.presentIds:
+		VR.hub.presentIds.remove(oldId)
+	for room in VR.hub.rooms:
+		if oldId in room.presentIds:
+			room.presentIds.remove(oldId)
+	for sensor in VR.presenceSensors:
+		sensor.personPresent = False
+	
+	print 'Role set to ' + str(newId)
+	VR.CameraId = newId
+</core>
+      <arg type="int" value="-1" name_suffix="0" base_name="newId" name_space="setRole"/>
+    </Script>
+    <Script base_name="site" group="no group" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="HTML" unique="1">
+      <core>
+&lt;html&gt;
+
+&lt;head&gt;
+ &lt;style type="text/css"&gt;
+  body {font-size:200%;
+		text-align:center;
+		background:#fff0e0;
+		color:#ff6622}
+  button {font-size:100%;color:#ff6622;}
+ &lt;/style&gt;
+  &lt;script&gt;
+	var websocket = new WebSocket('ws://localhost:5500');
+	websocket.onopen = function() { msg('open'); };
+	websocket.onerror = function(e) { msg('error'); };
+	websocket.onmessage = function(m) { if(m.data) msg('msg: '+m.data); };
+	websocket.onclose = function(e) { msg('closed with code '+e.code); };
+	
+	function send(m){ websocket.send(m); };
+	function msg(m){ document.getElementById("msg").innerHTML += '&lt;br&gt;' + m; };
+ &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+
+&lt;body&gt;
+	WebSocket Example:&lt;br&gt;&lt;br&gt;
+	&lt;button onclick="send('TIME TO PARTY!')"&gt;Fuck the lights up !&lt;/button&gt;
+	&lt;div id="msg"&gt;&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</core>
+    </Script>
+    <Script base_name="wasd_navi" group="navi" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	cam = VR.find('Default.1')
+	kb = VR.find('keyboard')
+	
+	isW = kb.getKeyState(ord('w')) &gt; 0
+	isA = kb.getKeyState(ord('a')) &gt; 0
+	isS = kb.getKeyState(ord('s')) &gt; 0
+	isD = kb.getKeyState(ord('d')) &gt; 0
+	
+	#print isW, isA, isS, isD
+	
+	cdir = cam.getDir()
+	
+	S = 0
+	D = 0
+	if isW: S =  0.007
+	if isS: S = -0.007
+	if isA: D =  0.02
+	if isD: D = -0.02
+	
+	d = [0,0,0]
+	d[0] += S*cdir[0]
+	#d[1] += S*cdir[1]
+	d[2] += S*cdir[2]
+	
+	cam.translate(d)
+	cam.rotate(0,1,0,D)
+	
+</core>
+      <trig type="on_timeout" dev="" state="Pressed" param="0" key="0" name_suffix="9" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="websocket" group="input" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	prefix = dev.getMessage()[:3]
+	content = dev.getMessage()[4:]
+
+	if prefix == "CLK": #clock
+		if content == "register":
+			VR.hub.clocks.append(dev.getKey())
+			dev.answer(dev.getKey(), 'SUBSCRIBED')
+	else:
+		VR.mw.recv(dev)
+</core>
+      <trig type="on_device" dev="server1" state="Released" param="" key="-1" name_suffix="2" base_name="trigger" name_space="__global__"/>
+    </Script>
+    <Script base_name="zTestDoors" group="testScripts" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	doors = VR.hub.doors
+	
+	for door in doors:
+		if door.isClosed:
+			door.setOpen()	
+		else:
+			door.setClosed()
+	
+	
+	
+</core>
+    </Script>
+    <Script base_name="zTestIntersect" group="testScripts" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	def dot(u,v):
+		return u[0]*v[0] + u[1]*v[1] + u[2]*v[2]
+	def sub(u,v):
+		return [u[0]-v[0] , u[1]-v[1] , u[2]-v[2]]
+	
+	l = VR.find('light.1')
+	caster = VR.find('Default')
+	Pcas = caster.getWorldFrom()
+	
+	#if hasattr(VR, 'boxes'): 
+	#	VR.boxes.destroy()
+	if not hasattr(VR, 'boxes'):
+		VR.boxes = VR.Object('boxes')
+		#l.addChild(VR.boxes)
+		for x in [0,2,4,6,8]:
+			box = VR.Geometry('box')
+			box.setPrimitive('Box 1 1 1 1 1 1')
+			box.setWorldFrom([x,20,0])
+			VR.boxes.addChild(box)
+	
+	i = caster.castRay(VR.boxes, [0,0,-1])
+	if i.getIntersected(): 
+		name = i.getIntersected().getName()
+		#print name
+	
+		Pint = i.getIntersection()
+		Pbox = i.getIntersected().getWorldFrom()
+	
+		inBox = dot( sub(Pcas, Pbox), sub(Pint, Pbox) ) &lt; 0.0 and i.getIntersected() != None
+		#print inBox
+	else: print 'nothing intersected'
+	
+</core>
+    </Script>
+    <Script base_name="zTestTextures" group="testScripts" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	
+	'''xx = VR.find("Floor_Livingroom").getMaterial()
+	xx.setTexture("./assets/textures/Parkett_1.png")
+	xx.setTextureType("Normal")
+	xx.setTextureWrapping("GL_REPEAT", "GL_REPEAT")
+	VR.find("Floor_Livingroom").setMaterial(xx)
+	print VR.find("Floor_Livingroom").getMaterial().getTexture()'''
+</core>
+    </Script>
+    <Script base_name="zTestTimedEvent" group="testScripts" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
+      <core>
+	import VR
+	from core.TimedEvent import TimedEvent
+	
+	VR.timedEvents = []
+	VR.redlight = False
+	
+	
+	def event():
+		light = VR.find("Light_Livingroom")
+		#light2 = VR.find("light")
+		
+		if VR.redlight:
+			light.setDiffuse([0.988,0.988,0.898,1.0])
+			VR.redlight = False
+		else:
+			light.setDiffuse([0.99,0.0,0.0,0.0])
+			VR.redlight = True
+	
+	newEvent = TimedEvent(20, event, 1)
+	VR.timedEvents.append(newEvent)
+</core>
+    </Script>
+  </Scripts>
+  <Sockets persistency="666"/>
+  <Background color="0.864378 0.897231 1" format=".jpg" path="./assets/skybox/sky" persistency="666" type="2"/>
+  <Navigation active="Orbit" persistency="666"/>
+  <Materials persistency="666"/>
+  <Semantics persistency="666"/>
+</Scene>

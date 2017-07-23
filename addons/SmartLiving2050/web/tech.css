@@ -1,0 +1,203 @@
+/**
+ * CSS definitions used EXCLUSIVELY by tenant/technician app.
+ * See common.css for CSS definitions that are used multiple
+ * front-ends.
+ *
+ *    -- awaidler, 2016-12-08
+ */ 
+
+/* Login borrowed from Bootstrap's "login" example (docs/examples/login)
+ *   -- awaidler, 2016-11-28
+ */
+
+.form-login {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-login .form-login-heading {
+  margin-bottom: 10px;
+}
+.form-login .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-login .form-control:focus {
+  z-index: 2;
+}
+.form-login input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-login input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Own CSS-Styles (all starting with "app-")
+ *    -- jzehnter, 2017-01-15
+ */
+
+.app-navbar {
+	top: 0;
+	left: 0;
+	right: 0;
+	position: fixed;
+	z-index: 1030;
+	background-color: #FC6D26;
+
+	
+}
+
+.app-navbar-header {
+	background-color: #FC6D26;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.app-navbar-box1 {
+	box-shadow: -1px 0px 0px #FCA326 inset; 
+	border-bottom: 2px solid #FCA326;
+	color: white; 
+	padding-top: 3px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.app-navbar-active {
+	border-bottom: 2px solid #E24329;
+}
+
+.app-navbar-row {
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+
+	padding-left: 0px;
+	list-style-type: none;
+	color: white;
+}
+
+.app-navbar-container {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.app-navbar-glyph {
+	font-size: 120%;
+}
+
+.app-btn-1 {
+	background-color: #FC6D26;
+	border color: #E24329;
+	color: #fff;
+}	
+
+.app-btn-2 {
+	background-color: #FC6D26;
+	border color: #E24329;
+	color: #E24329;
+	border: 2px solid #E24329;
+	padding: 5px;
+}	
+
+.app-color-darker {
+	color: #E24329
+}
+
+.app-table {
+	margin-right: 6px;
+	margin-left: 6px;
+}
+
+.app-panel {
+	margin-bottom: 8px; 
+	margin-top: 70px; 
+	margin-left: 0px; 
+	margin-right: 0px; 
+	border: 0px;
+	text-align: left;
+}
+
+.app-panel2 {
+	margin-bottom: 8px; 
+	margin-top: 8px; 
+	margin-left: 0px; 
+	margin-right: 0px; 
+	border: 0px;
+	text-align: left;
+}
+
+
+.panel-default > .app-panel-heading {
+	padding: 4px 15px; 
+	color: #E24329; 
+	border-color: #FC6D26; 
+	border-width: 3px; 
+	background-color: white;
+}
+
+
+.app-timebox {
+	width: 40%;  
+	display:block; 
+	margin-left: auto;
+	margin-right: auto; 
+	border: 2px solid #FC6D26;
+	text-align: center;
+}
+
+.app-modal {
+	padding: 8px;
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+.app-navbar-headline {
+	/*font-size: 2.2em;*/
+	font-size: 9vw; /* responsive font size! trouble? set 2.2em */
+	color: white;
+}
+
+.app-navbar-config {
+	/*font-size: 2.2em;*/
+	font-size: 5vw; /* responsive font size! trouble? set fix 2.2em */
+	color: #FCA326;
+	padding-right: 8px;
+	padding-top: 6px;
+}
+
+.app-row {
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.app-container {
+	padding-left: 2px; 
+	padding-right: 2px;
+}
+
+/* Hide all content initially because JavaScript enables them. */
+
+#login, #app, #dashboard .page {
+  display: none;
+} 
+
+
+/* COLORS IMI: 
+
+Standard:  #FC6D26
+
+Lighter:  #FCA326
+
+Darker:  #E24329    */
+

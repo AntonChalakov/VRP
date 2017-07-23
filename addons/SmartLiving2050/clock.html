@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type="text/css">
+			body {background-color: #ABCDEF; font-size: 12em; text-align: center;}
+		</style>
+		<script>
+			var websocket = new WebSocket('ws://localhost:5500');
+	        websocket.onopen = function() { msg('open'); register(); };
+		    websocket.onerror = function(e) { msg('error'); };
+    		websocket.onmessage = function(m) { if(m.data) msg(m.data); };
+	        websocket.onclose = function(e) { msg('closed with code '+e.code); };
+	
+		    function register(){websocket.send('CLK:register')};
+    		function send(m){websocket.send(m);};
+    		function msg(m){document.getElementById("msg").innerHTML = m};
+		</script>
+	</head>
+	<body>
+		<div id="msg">Test</div>
+	</body>
+</html>

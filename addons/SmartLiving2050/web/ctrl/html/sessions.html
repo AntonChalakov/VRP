@@ -1,0 +1,72 @@
+<div>
+  <!-- Modal for reset roles button - jz, 2016-12-03 -->
+  <div id="modal_reset" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <span class="glyphicon glyphicon-off"></span>Reset Roles
+             </h4>
+        </div>
+        <div class="modal-body">
+          <p>Warning: All devices will lose their current roles. TODO </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button id="reset_roles" type="button" class="btn btn-danger" data-dismiss="modal">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal ends Here -->
+
+  <div id="sessions" class="page">
+    <h1 class="page-header ctrl_h1">Sessions
+      <!-- <span>
+        <button type="button" class="btn btn-default btn-lg pull-right active" aria-label="Reset roles" data-toggle="modal" data-target="#modal_reset">
+          <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        </button>
+      </span> -->
+    </h1>
+
+   <div id="tenant" class="row">
+      <div class="col-xs-3 col-md-1 text-center">
+        <p class="small"><img src="images/my-icons-collection/Tenant.png" class="img-responsive" alt="tenant" /><em>[1]</em></p>
+      </div>
+      <div class="col-xs-4 col-md-10 lead vertical-align" style="margin-bottom: 0px;">
+        <span class="connection"></span>
+        <span class="dropdown"></span>
+      </div>
+    </div>
+
+    <div id="technician" class="row buffer-top-20">
+      <div class="col-xs-3 col-md-1 text-center">
+        <p class="small"><img src="images/my-icons-collection/Technician.png" class="img-responsive" alt="technician" /><em>[2]</em></p>
+      </div>
+      <div class="col-xs-4 col-md-8 lead">
+        <span class="connection"></span>
+        <span class="dropdown"></span>
+      </div>
+    </div>
+
+    <div class="row buffer-top-20">
+      <div class="col-xs-3 col-md-1 text-center">
+       <p class="small"><img src="images/my-icons-collection/multiple-users-silhouette.png" class="img-responsive" alt="spectators" /><em>[3]</em></p>
+      </div>
+      <div class="col-xs-4 col-md-4">
+        <table class="table table-hover table-condensed">
+          <thead>
+            <th width="30%">Device</th>
+            <th width="55%">Role</th>
+            <th width="15%"></th>
+          </thead>
+          <tbody id="sessions-table">
+          </tbody>
+        </table>
+        <nav class="navbar-fixed-bottom" style="min-height: 0px; opacity: 0.5;">
+          <p class="pull-right"><em>Icons made by <a href="http://www.flaticon.com/authors/gregor-cresnar">Gregor Cresnar</a> [1] and <a href="http://www.flaticon.com/authors/freepik">Freepik</a> [2],[3] from www.flaticon.com&nbsp;&nbsp;&nbsp;</em></p>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

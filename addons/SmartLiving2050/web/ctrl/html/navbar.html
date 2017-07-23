@@ -1,0 +1,53 @@
+<div>
+  <!-- Top navigation bar:  http://holdirbootstrap.de/komponenten/#navbar   - jz, 2016-12-03 -->
+  <!-- Navbar top 
+  ================================================== -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+         <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Navigation ein-/ausblenden</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button> -->
+        <a class="navbar-brand" href="#">Scenario Control</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Language <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" onclick="language_english()">English</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#" onclick="language_german()">German</a></li>
+            </ul>
+          </li>
+          <button type="button" class="btn btn-default navbar-btn" aria-label="Restart" data-toggle="modal" data-target="#modal_restart">
+            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+          </button>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="modal fade bs-example-modal-sm" id="modal_restart" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <!-- Modal for restart button - jz, 2016-12-03 -->
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">
+                  <span class="glyphicon glyphicon-off"></span>
+                  Restart Scenario Control
+               </h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to restart Scenario Control? All configurations will be reset and all devices will lose their current roles. </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="restart_sc()">Restart</button>
+          </div>
+      </div>
+    </div>
+  </div> <!-- Modal ends Here --> 
+</div>

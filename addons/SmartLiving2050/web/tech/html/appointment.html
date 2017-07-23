@@ -1,0 +1,33 @@
+<div id="appointment"> 
+  <div class="row app-row">
+    <div class="col-xs-12 app-row">
+      <div class="panel panel-default app-panel">
+        <div class="panel-heading app-panel-heading"><strong>Appointments</strong>
+          <!--<span><button type="button" class="btn btn-xs btn-default">Clear</button></span>-->
+        </div>
+        <ul class="list-group" id="appointment_insert_current">
+          <li id="empty_current_overview" class="list-group-item">No upcoming appointments. </li> <!-- gets hidden w/ JS, if first item is inserted --> 
+        </ul>
+      </div>
+      <div class="panel panel-default app-panel2">
+       <div class="panel-heading app-panel-heading"><strong>Past Appointments</strong></div>
+        <ul class="list-group" id="appointment_insert_past">
+        </ul>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span class="glyphicon glyphicon-sm glyphicon-wrench" aria-hidden="true"></span>&nbsp;&nbsp;[Friday, 15:00 - 17:00] Poststr. 24, Apt. 3: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RADIATOR1 in Kitchen broken (Fri, 10:47)
+            <span class="pull-right"> <span class="glyphicon glyphicon-sm glyphicon-ok" aria-hidden="true"></span></span>
+          </li>
+          <li class="list-group-item">
+            <span class="glyphicon glyphicon-sm glyphicon-wrench" aria-hidden="true"></span>&nbsp;&nbsp;[Friday, 13:00 - 14:00] Bahnhofstr. 12, Apt. 21: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LAMP2 in Hallway broken (Thu, 16:25) 
+            <span class="pull-right"> <span class="glyphicon glyphicon-sm glyphicon-ok" aria-hidden="true"></span></span>
+          </li>
+          <li class="list-group-item">
+            <span class="glyphicon glyphicon-sm glyphicon-wrench" aria-hidden="true"></span>&nbsp;&nbsp;[Thursday, 9:00 - 11:00] Kuthsweg 45, Apt. 12:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LAMP6 in Bedroom broken (Wed, 20:22)
+            <span class="pull-right"> <span class="glyphicon glyphicon-sm glyphicon-ok" aria-hidden="true"></span></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div id="welcome"> 
+  <div class="row app-row">
+    <div class="col-xs-12 app-row">
+      <div class="panel panel-default app-panel app-timebox">  
+        <div class="panel-heading app-panel-heading text-center"><strong> Time</strong></div>
+        <table class="table app-table">
+          <tr><td><div id="time_welcome" class="text-center"><!-- time inserted w/ JS -->ERROR: Time</div></td></tr>
+        </table>
+      </div>
+
+      <div class="panel panel-default app-panel2">
+        <div class="panel-heading app-panel-heading"><strong>Current Faults</strong></div>
+        <ul class="list-group" id="overview_faults">
+          <li id="empty_overview_faults" class="list-group-item">No faults reported. </li> <!-- gets hidden w/ JS, if first item is inserted --> 
+        </ul>
+        <div class="panel panel-default app-panel2"> 
+          <div class="panel-heading app-panel-heading"><strong>Upcoming Appointments</strong>
+          <!--<span><button type="button" class="btn btn-xs btn-default">Clear</button></span>-->
+        </div>
+        <ul class="list-group" id="overview_appointments">
+          <li id="empty_overview_appointments" class="list-group-item">No faults reported. </li> <!-- gets hidden w/ JS, if first item is inserted --> 
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

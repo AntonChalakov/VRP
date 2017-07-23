@@ -1,0 +1,1280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.78.0</authoring_tool>
+    </contributor>
+    <created>2017-01-30T19:15:35</created>
+    <modified>2017-01-30T19:15:35</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images>
+    <image id="tatami_bump_png" name="tatami_bump_png">
+      <init_from>tatami_bump.png</init_from>
+    </image>
+    <image id="center_edge_bump_png" name="center_edge_bump_png">
+      <init_from>center_edge_bump.png</init_from>
+    </image>
+    <image id="border_color_png" name="border_color_png">
+      <init_from>border_color.png</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="tatami-effect">
+      <profile_COMMON>
+        <newparam sid="tatami_bump_png-surface">
+          <surface type="2D">
+            <init_from>tatami_bump_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="tatami_bump_png-sampler">
+          <sampler2D>
+            <source>tatami_bump_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="tatami_bump_png-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.1 0.1 0.1 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="border-effect">
+      <profile_COMMON>
+        <newparam sid="border_color_png-surface">
+          <surface type="2D">
+            <init_from>border_color_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="border_color_png-sampler">
+          <sampler2D>
+            <source>border_color_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="border_color_png-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="tatami-material" name="tatami">
+      <instance_effect url="#tatami-effect"/>
+    </material>
+    <material id="border-material" name="border">
+      <instance_effect url="#border-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Plane_003-mesh" name="Plane.003">
+      <mesh>
+        <source id="Plane_003-mesh-positions">
+          <float_array id="Plane_003-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_003-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_003-mesh-normals">
+          <float_array id="Plane_003-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_003-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_003-mesh-map-0">
+          <float_array id="Plane_003-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_003-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_003-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_003-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_003-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_003-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_003-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_003-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_003-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_003-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_001-mesh" name="Plane.001">
+      <mesh>
+        <source id="Plane_001-mesh-positions">
+          <float_array id="Plane_001-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_001-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_001-mesh-normals">
+          <float_array id="Plane_001-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_001-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_001-mesh-map-0">
+          <float_array id="Plane_001-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_001-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_001-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_001-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_001-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_001-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_001-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_001-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_019-mesh" name="Plane.019">
+      <mesh>
+        <source id="Plane_019-mesh-positions">
+          <float_array id="Plane_019-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_019-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_019-mesh-normals">
+          <float_array id="Plane_019-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_019-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_019-mesh-map-0">
+          <float_array id="Plane_019-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_019-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_019-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_019-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_019-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_019-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_019-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_019-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_019-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_019-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_020-mesh" name="Plane.020">
+      <mesh>
+        <source id="Plane_020-mesh-positions">
+          <float_array id="Plane_020-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_020-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_020-mesh-normals">
+          <float_array id="Plane_020-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_020-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_020-mesh-map-0">
+          <float_array id="Plane_020-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_020-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_020-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_020-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_020-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_020-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_020-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_020-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_020-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_020-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_021-mesh" name="Plane.021">
+      <mesh>
+        <source id="Plane_021-mesh-positions">
+          <float_array id="Plane_021-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_021-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_021-mesh-normals">
+          <float_array id="Plane_021-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_021-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_021-mesh-map-0">
+          <float_array id="Plane_021-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_021-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_021-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_021-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_021-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_021-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_021-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_021-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_021-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_021-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_022-mesh" name="Plane.022">
+      <mesh>
+        <source id="Plane_022-mesh-positions">
+          <float_array id="Plane_022-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_022-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_022-mesh-normals">
+          <float_array id="Plane_022-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_022-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_022-mesh-map-0">
+          <float_array id="Plane_022-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_022-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_022-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_022-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_022-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_022-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_022-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_022-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_022-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_022-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_023-mesh" name="Plane.023">
+      <mesh>
+        <source id="Plane_023-mesh-positions">
+          <float_array id="Plane_023-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_023-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_023-mesh-normals">
+          <float_array id="Plane_023-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_023-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_023-mesh-map-0">
+          <float_array id="Plane_023-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_023-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_023-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_023-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_023-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_023-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_023-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_023-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_023-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_023-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_024-mesh" name="Plane.024">
+      <mesh>
+        <source id="Plane_024-mesh-positions">
+          <float_array id="Plane_024-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_024-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_024-mesh-normals">
+          <float_array id="Plane_024-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_024-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_024-mesh-map-0">
+          <float_array id="Plane_024-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_024-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_024-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_024-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_024-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_024-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_024-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_024-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_024-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_024-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_025-mesh" name="Plane.025">
+      <mesh>
+        <source id="Plane_025-mesh-positions">
+          <float_array id="Plane_025-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_025-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_025-mesh-normals">
+          <float_array id="Plane_025-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_025-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_025-mesh-map-0">
+          <float_array id="Plane_025-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_025-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_025-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_025-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_025-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_025-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_025-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_025-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_025-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_025-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_026-mesh" name="Plane.026">
+      <mesh>
+        <source id="Plane_026-mesh-positions">
+          <float_array id="Plane_026-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_026-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_026-mesh-normals">
+          <float_array id="Plane_026-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_026-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_026-mesh-map-0">
+          <float_array id="Plane_026-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_026-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_026-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_026-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_026-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_026-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_026-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_026-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_026-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_026-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_027-mesh" name="Plane.027">
+      <mesh>
+        <source id="Plane_027-mesh-positions">
+          <float_array id="Plane_027-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_027-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_027-mesh-normals">
+          <float_array id="Plane_027-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_027-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_027-mesh-map-0">
+          <float_array id="Plane_027-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_027-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_027-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_027-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_027-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_027-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_027-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_027-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_027-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_027-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_028-mesh" name="Plane.028">
+      <mesh>
+        <source id="Plane_028-mesh-positions">
+          <float_array id="Plane_028-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_028-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_028-mesh-normals">
+          <float_array id="Plane_028-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_028-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_028-mesh-map-0">
+          <float_array id="Plane_028-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_028-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_028-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_028-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_028-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_028-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_028-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_028-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_028-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_028-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_029-mesh" name="Plane.029">
+      <mesh>
+        <source id="Plane_029-mesh-positions">
+          <float_array id="Plane_029-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_029-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_029-mesh-normals">
+          <float_array id="Plane_029-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_029-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_029-mesh-map-0">
+          <float_array id="Plane_029-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_029-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_029-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_029-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_029-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_029-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_029-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_029-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_029-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_029-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_030-mesh" name="Plane.030">
+      <mesh>
+        <source id="Plane_030-mesh-positions">
+          <float_array id="Plane_030-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_030-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_030-mesh-normals">
+          <float_array id="Plane_030-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_030-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_030-mesh-map-0">
+          <float_array id="Plane_030-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_030-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_030-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_030-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_030-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_030-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_030-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_030-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_030-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_030-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_031-mesh" name="Plane.031">
+      <mesh>
+        <source id="Plane_031-mesh-positions">
+          <float_array id="Plane_031-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_031-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_031-mesh-normals">
+          <float_array id="Plane_031-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_031-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_031-mesh-map-0">
+          <float_array id="Plane_031-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_031-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_031-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_031-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_031-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_031-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_031-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_031-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_031-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_031-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_032-mesh" name="Plane.032">
+      <mesh>
+        <source id="Plane_032-mesh-positions">
+          <float_array id="Plane_032-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_032-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_032-mesh-normals">
+          <float_array id="Plane_032-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_032-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_032-mesh-map-0">
+          <float_array id="Plane_032-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_032-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_032-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_032-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_032-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_032-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_032-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_032-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_032-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_032-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_033-mesh" name="Plane.033">
+      <mesh>
+        <source id="Plane_033-mesh-positions">
+          <float_array id="Plane_033-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_033-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_033-mesh-normals">
+          <float_array id="Plane_033-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_033-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_033-mesh-map-0">
+          <float_array id="Plane_033-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_033-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_033-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_033-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_033-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_033-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_033-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_033-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_033-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_033-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Plane_034-mesh" name="Plane.034">
+      <mesh>
+        <source id="Plane_034-mesh-positions">
+          <float_array id="Plane_034-mesh-positions-array" count="24">-1 -1 0 1 -1 0 -1 1 0 1 1 0 1.075 -1 0 1.075 1 0 -1.075 -1 0 -1.075 1 0</float_array>
+          <technique_common>
+            <accessor source="#Plane_034-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_034-mesh-normals">
+          <float_array id="Plane_034-mesh-normals-array" count="3">0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_034-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_034-mesh-map-0">
+          <float_array id="Plane_034-mesh-map-0-array" count="36">0.9999001 1.0004e-4 9.998e-5 0.9999001 1.00099e-4 9.998e-5 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 -4.7434 0.9889175 5.743399 0.001725852 5.743399 0.9888233 0.9999001 1.0004e-4 0.9999001 0.9999001 9.998e-5 0.9999001 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852 -4.7434 0.9889175 -4.7434 0.001816868 5.743399 0.001725852</float_array>
+          <technique_common>
+            <accessor source="#Plane_034-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_034-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_034-mesh-positions"/>
+        </vertices>
+        <polylist material="tatami-material" count="2">
+          <input semantic="VERTEX" source="#Plane_034-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_034-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_034-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>1 0 0 2 0 1 0 0 2 1 0 9 3 0 10 2 0 11</p>
+        </polylist>
+        <polylist material="border-material" count="4">
+          <input semantic="VERTEX" source="#Plane_034-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_034-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_034-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>1 0 3 5 0 4 3 0 5 2 0 6 6 0 7 0 0 8 1 0 12 4 0 13 5 0 14 2 0 15 7 0 16 6 0 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="tatami" name="tatami" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 0.005092978 0 -1.74846e-7 4.128524 -1.19209e-7 -1.860465 -3.63985e-6 -1.64215e-13 1.999997 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_003-mesh" name="tatami">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_001" name="tatami_001" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 0.005089641 0 -1.74846e-7 4.128524 -2.38419e-7 -1.860465 -3.63985e-6 -1.64215e-13 -2.000004 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_001-mesh" name="tatami_001">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_002" name="tatami_002" type="NODE">
+        <matrix sid="transform">-1.860465 7.97909e-6 -3.60927e-7 -5.994904 -1.62647e-7 1.74846e-7 4.128524 -2.31796e-7 3.7112e-6 4 -1.80464e-7 3.5829e-6 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_019-mesh" name="tatami_002">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_003" name="tatami_003" type="NODE">
+        <matrix sid="transform">-1.860465 7.97909e-6 -3.60927e-7 6.005095 -1.62647e-7 1.74846e-7 4.128524 -2.31797e-7 3.7112e-6 4 -1.80464e-7 -1.09606e-5 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_020-mesh" name="tatami_003">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_004" name="tatami_004" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 -3.994913 0 -1.74846e-7 4.128524 -4.76837e-7 -1.860465 -3.63985e-6 -1.64215e-13 -5.999996 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_021-mesh" name="tatami_004">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_005" name="tatami_005" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 4.005087 0 -1.74846e-7 4.128524 -4.76837e-7 -1.860465 -3.63985e-6 -1.64215e-13 -6.000003 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_022-mesh" name="tatami_005">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_006" name="tatami_006" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 4.005106 0 -1.74846e-7 4.128524 0 -1.860465 -3.63985e-6 -1.64215e-13 5.999997 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_023-mesh" name="tatami_006">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_007" name="tatami_007" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 -3.994894 0 -1.74846e-7 4.128524 0 -1.860465 -3.63985e-6 -1.64215e-13 6.000004 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_024-mesh" name="tatami_007">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_008" name="tatami_008" type="NODE">
+        <matrix sid="transform">-1.860465 7.97909e-6 -3.60927e-7 -9.994906 -1.62647e-7 1.74846e-7 4.128524 -4.76837e-7 3.7112e-6 4 -1.80464e-7 -3.99999 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_025-mesh" name="tatami_008">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_009" name="tatami_009" type="NODE">
+        <matrix sid="transform">-1.860465 7.97909e-6 -3.60927e-7 -9.994891 -1.62647e-7 1.74846e-7 4.128524 0 3.7112e-6 4 -1.80464e-7 4.00001 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_026-mesh" name="tatami_009">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_010" name="tatami_010" type="NODE">
+        <matrix sid="transform">-1.860465 7.97909e-6 -3.60927e-7 10.00511 -1.62647e-7 1.74846e-7 4.128524 0 3.7112e-6 4 -1.80464e-7 3.999989 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_027-mesh" name="tatami_010">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_011" name="tatami_011" type="NODE">
+        <matrix sid="transform">-1.860465 7.97909e-6 -3.60927e-7 10.00509 -1.62647e-7 1.74846e-7 4.128524 -4.76837e-7 3.7112e-6 4 -1.80464e-7 -4.000011 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_028-mesh" name="tatami_011">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_012" name="tatami_012" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 0.005083933 0 -1.74846e-7 4.128524 -9.53674e-7 -1.860465 -3.63985e-6 -1.64215e-13 -9.999997 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_029-mesh" name="tatami_012">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_013" name="tatami_013" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 -7.994915 0 -1.74846e-7 4.128524 -9.53674e-7 -1.860465 -3.63985e-6 -1.64215e-13 -9.99999 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_030-mesh" name="tatami_013">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_014" name="tatami_014" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 8.005083 0 -1.74846e-7 4.128524 -9.53674e-7 -1.860465 -3.63985e-6 -1.64215e-13 -10 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_031-mesh" name="tatami_014">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_015" name="tatami_015" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 8.005117 0 -1.74846e-7 4.128524 0 -1.860465 -3.63985e-6 -1.64215e-13 9.999995 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_032-mesh" name="tatami_015">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_016" name="tatami_016" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 -7.994882 0 -1.74846e-7 4.128524 0 -1.860465 -3.63985e-6 -1.64215e-13 10.00001 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_033-mesh" name="tatami_016">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="tatami_017" name="tatami_017" type="NODE">
+        <matrix sid="transform">1.69295e-6 -4 -1.80464e-7 0.005118266 0 -1.74846e-7 4.128524 0 -1.860465 -3.63985e-6 -1.64215e-13 10 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_034-mesh" name="tatami_017">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="tatami-material" target="#tatami-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="border-material" target="#border-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

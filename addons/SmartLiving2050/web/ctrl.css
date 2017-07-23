@@ -1,0 +1,67 @@
+/**
+ * CSS definitions used EXCLUSIVELY by scenario control.
+ * See common.css for CSS definitions that are used multiple
+ * front-ends.
+ *
+ *    -- awaidler, 2016-12-08
+ */
+
+/* Own CSS-styles - jzehnter, 2016-12-04 */
+
+.no-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.no-margin {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.buffer-top-60 {
+    margin-top: 60px;
+}
+
+.buffer-bottom-40 {
+    margin-bottom: 40px;
+}
+
+.buffer-top-40 {
+    margin-top: 40px;
+}
+
+.buffer-top-20 {
+    margin-top: 20px;
+}
+
+.buffer-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.buffer-top-10 {
+    margin-top: 10px;
+}
+
+.buffer-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.hcenter {  /*to center horizontally in bootstrap-grid*/
+  margin-left: auto;
+  margin-right: auto;
+  float: none;
+}
+
+.vcenter {  /*to center vertically in bootstrap-grid*/
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+.ctrl_h1 {
+  border: 0px;
+}

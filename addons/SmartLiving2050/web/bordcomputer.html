@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+ <style type="text/css">
+  body {font-size:200%;
+		text-align:center;
+		background:#fff0e0;
+		color:#ff6622}
+  button {font-size:100%;color:#ff6622;}
+ </style>
+  <script>
+	var websocket = new WebSocket('ws://localhost:5500');
+	websocket.onopen = function() { msg('open'); };
+	websocket.onerror = function(e) { msg('error'); };
+	websocket.onmessage = function(m) { if(m.data) msg('msg: '+m.data); };
+	websocket.onclose = function(e) { msg('closed with code '+e.code); };
+	
+	function send(m){ websocket.send(m); };
+	function msg(m){ document.getElementById("msg").innerHTML += '<br>' + m; };
+ </script>
+</head>
+
+<body>
+
+
+<body>
+	Homey v1.0<br><br>
+	<button style="height:100px; width:200px;" onclick="send('TIMETOPARTY!')">All Lights On!</button>
+	<button style="height:100px; width:200px;" onclick="send('TIMETOPARTY2!')">Toggle The Lights!</button>
+	<br><br>
+	<button style="height:100px; width:200px;" onclick="send('Toggle Doors!')">Toggle The Doors!</button>
+	<button style="height:100px; width:200px;" onclick="send('Find The Person!')">Find My Homies!</button>
+
+
+</body>
+
+</html>

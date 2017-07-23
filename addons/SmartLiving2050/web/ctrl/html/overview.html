@@ -1,0 +1,53 @@
+<div id="overview" class="page">
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-4 col-md-offset-2">
+      <p class="lead pull-right">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+        <span class="time">Clock not connected to server.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="row buffer-top-20">
+    <h1 class="text-center">Welcome to Scenario Control!</h1>
+  </div>
+
+  <div class="row buffer-top-60">
+    <div class="col-md-6 text-center">
+      <span class="lead">
+        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+        Events
+      </span>
+      <div class="buffer-top-40">
+      <ul id="events_list" style="list-style: none;"></ul>          <!-- TODO: CSS -->
+      </div>
+    </div>
+    <div class="col-md-6 text-center">
+      <span class="lead">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        Sessions
+      </span>
+      <div class="buffer-top-40">
+      <ul id="sessions_list" style="list-style: none;">             <!-- TODO: CSS -->
+        <li class="lead tenant">
+          Tenant:
+          <span class="glyphicon"></span>
+        </li>
+        <li class="lead technician">
+          Technician:
+          <span class="glyphicon"></span>
+        </li>
+        <li class="lead">
+          Spectators:
+          <span class="spectator_count"></span>
+        </li>
+        <li class="lead">
+          Operators:
+          <span class="operator_count"></span>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+</div>

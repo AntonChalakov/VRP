@@ -1,0 +1,140 @@
+<div id="energy">         <!-- insert " class="page" " later -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default app-panel">
+       <div class="panel-heading app-panel-heading"><strong>Overview</strong></div>
+        <div class="panel-body text-center">
+<!--          <div class="container">
+	          <p>Average energy consumption of the current month: 1107kWh</p>
+	        </div>  -->
+        
+         <!--Load the AJAX API-->
+        <script type="text/javascript">
+          $.getScript( "https://www.gstatic.com/charts/loader.js", function( data, textStatus, jqxhr )
+          {
+          // Load the Visualization API and the corechart package.
+          google.charts.load('current', {'packages':['corechart']});
+
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.charts.setOnLoadCallback(drawChart);
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Device');
+            data.addColumn('number', 'Consumption');
+            data.addRows([
+              ['Heating pump',45],
+              ['Cooking',37],
+              ['Fridge + Freezer',62],
+              ['Washing machine + Dryer',17+27],
+              ['Lighting', 28],
+              ['Television', 16],
+              ['Dish washer',20],
+              ['Heating',760],
+              ['Others',95]
+            ]);
+
+            // Set chart options
+            var options = {'title':'Distribution of each device [kWh]',
+                           'width':350,
+                           'height':250, 
+                           'backgroundColor': 'white',
+                           'backgroundColor.stroke': 'black',
+                           'backgroundColor.strokeWidth': 100,
+                           'pieStartAngle': 0,
+                           'is3D': true,
+                           chartArea: {left: 10, top: 0, width: "100%", height: "100%"},   // added to make chart bigger   -jz 
+                           legend: { alignment: 'center' }
+                          };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+            }
+          });
+        </script>
+      </div>
+
+        <!--Div that will hold the pie chart-->
+        <div id="chart_div" style="width: 95%; position: relative;"></div>  <!-- TODO: CSS --> 
+
+
+        <div class="panel panel-default app-panel2">
+          <div class="panel-heading app-panel-heading"><strong>Energy Consumption</strong></div>
+          <table class="table app-table">
+            <thead>
+              <tr>
+                <th>Devices</th>
+                <th>Consumption [kWh]</th>
+                <th>Cost [€]</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+
+              <tr>
+                <td><font color=#fc6e38>Total</font></td>
+                <td><font color=#fc6e38>1107</font></td>
+                <td><font color=#fc6e38>318.82</font></td>
+              </tr>
+              <tr>
+                <td>Heating pump</td>
+                <td>45</td>
+                <td>12.96</td>
+              </tr>
+              <tr>
+                <td>Cooking</td>
+                <td>37</td>
+                <td>10.66</td>
+              </tr>
+              <tr>
+                <td>Fridge + Freezer</td>
+                <td>62</td>
+                <td>17.86</td>
+              </tr>
+          <tr>
+                <td>Washing machine + Dryer</td>
+                <td>44</td>
+                <td>12.67</td>
+              </tr>
+          <tr>
+                <td>Lighting</td>
+                <td>28</td>
+                <td>8.06</td>
+              </tr>
+          <tr>
+                <td>Television</td>
+                <td>16</td>
+                <td>4.61</td>
+              </tr>
+          <tr>
+                <td>Dish washer</td>
+                <td>20</td>
+                <td>5.76</td>
+              </tr>
+          <tr>
+                <td>Heating</td>
+                <td>760</td>
+                <td>218.88</td>
+              </tr>
+          <tr>
+                <td>Others</td>
+                <td>95</td>
+                <td>27.36</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel-body text-center">
+          <p>(Cost based on the assumption of 28,8 Ct average per kWh.)</p>
+        </div> 
+        
+	    </div>
+    </div>
+  </div>
+</div>
