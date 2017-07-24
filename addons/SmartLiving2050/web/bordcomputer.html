@@ -3,7 +3,6 @@
 
 <head>
 
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   	<meta charset="utf-8">
  <style type="text/css">
 
@@ -54,25 +53,11 @@
 	    font-size: 1.4em;
 	  }
 	 
-	  /* Option 1 - Display Inline */
 	  .nav li {
 	    display: inline-block;
 	    margin-right: -4px;
 	  }
-	 
-	  /* Options 2 - Float
-	  .nav li {
-	    float: left;
-	  }
-	  .nav ul {
-	    overflow: auto;
-	    width: 600px;
-	    margin: 0 auto;
-	  }
-	  .nav {
-	    background-color: #444;
-	  }
-	  */
+	
 	}
  </style>
   <script>
@@ -88,8 +73,10 @@
 			for(i = 1; i < 6; i++)
 			{
 				document.getElementById(i).classList.remove('active');
+				document.getElementById("content" + i).style.display = "none";
 			}
 			document.getElementById(id).classList.add('active');
+			document.getElementById("content" + id).style.display = "";
 		}
 		
 		
@@ -97,19 +84,6 @@
 	function send(m){ websocket.send(m); };
 	function msg(m){ document.getElementById("msg").innerHTML += '<br>' + m; };
 
-	var $content = $('.menu-content');
-
-	function showContent(type) {
-	  $content.hide().filter('.' + type).show();
-	}
-
-	$('.menu').on('click', '.menu-btn', function(e) {
-	  showContent(e.currentTarget.hash.slice(1));
-	  e.preventDefault();
-	}); 
-
-	// show 'about' content only on page load (if you want)
-	showContent('about');
 	
  </script>
 </head>
@@ -117,14 +91,14 @@
 <body>
 
 
-<body class="news">
-	Homey v1.0<br><br>
+<body>
+	Homey v1.7<br><br>
 
   <header>
     <div class="nav">
       <ul>
-        <li id="1"  onclick="toggleActive(this.id)" ><a href="#">Room/House Information</a></li>
-        <li id="2" onclick="toggleActive(this.id)" class="active"><a  href="#">Home2</a></li>
+        <li id="1"  onclick="toggleActive(this.id)" class="active"><a href="#">Room/House Information</a></li>
+        <li id="2" onclick="toggleActive(this.id)"><a  href="#">Home2</a></li>
         <li id="3" onclick="toggleActive(this.id)"><a href="#">Home3</a></li>
         <li id="4" onclick="toggleActive(this.id)"><a href="#">Home4</a></li>
         <li id="5" onclick="toggleActive(this.id)"><a href="#">Home5</a></li>
@@ -132,15 +106,11 @@
     </div>
   </header>
 	
-		<ul class="menu">
-		    <li><a href="#about" class="menu-btn">About</a></li>
-		    <li><a href="#contact" class="menu-btn">Contact</a></li>
-		    <li><a href="#misc" class="menu-btn">Misc</a></li>
-		  </ul>
-
-		  <div class="menu-content about">About</div>
-		  <div class="menu-content contact">Contact</div>
-		  <div class="menu-content misc">Misc</div>
+		  <div id="content1" style="display:none">Content1		</div>
+		  <div id="content2" style="display:none">Content2</div>
+		  <div id="content3" style="display:none">Content3</div>
+		  <div id="content4" style="display:none">Content4</div>
+		  <div id="content5" style="display:none">Content5</div>
 		  
 
 
@@ -149,6 +119,7 @@
 	<br><br>
 	<button style="height:100px; width:200px;" onclick="send('Toggle Doors!')">Toggle The Doors!</button>
 	<button style="height:100px; width:200px;" onclick="send('Find The Person!')">Find My Homies!</button>
+	<div id="msg"></div>
 
 
 </body>
