@@ -2,12 +2,78 @@
 <html>
 
 <head>
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  	<meta charset="utf-8">
  <style type="text/css">
-  body {font-size:200%;
-		text-align:center;
-		background:#fff0e0;
-		color:#ff6622}
-  button {font-size:100%;color:#ff6622;}
+
+	body {
+	  margin: 0;
+	  padding: 0;
+	  background: #ccc;
+	}
+	 
+	.nav ul {
+	  list-style: none;
+	  background-color: #444;
+	  text-align: center;
+	  padding: 0;
+	  margin: 0;
+	}
+	.nav li {
+	  font-family: 'Oswald', sans-serif;
+	  font-size: 1.2em;
+	  line-height: 40px;
+	  height: 40px;
+	  border-bottom: 1px solid #888;
+	}
+	 
+	.nav a {
+	  text-decoration: none;
+	  color: #fff;
+	  display: block;
+	  transition: .3s background-color;
+	}
+	 
+	.nav li:hover {
+	  background-color: #005f5f;
+	}
+	 
+	.nav li.active {
+	  background-color: #005f5f;
+	  color: #444;
+	  cursor: default;
+	}
+	 
+	@media screen and (min-width: 600px) {
+	  .nav li {
+	    width: 180px;
+	    border-bottom: none;
+	    height: 100px;
+	    line-height: 50px;
+	    font-size: 1.4em;
+	  }
+	 
+	  /* Option 1 - Display Inline */
+	  .nav li {
+	    display: inline-block;
+	    margin-right: -4px;
+	  }
+	 
+	  /* Options 2 - Float
+	  .nav li {
+	    float: left;
+	  }
+	  .nav ul {
+	    overflow: auto;
+	    width: 600px;
+	    margin: 0 auto;
+	  }
+	  .nav {
+	    background-color: #444;
+	  }
+	  */
+	}
  </style>
   <script>
 	var websocket = new WebSocket('ws://localhost:5500');
@@ -15,17 +81,69 @@
 	websocket.onerror = function(e) { msg('error'); };
 	websocket.onmessage = function(m) { if(m.data) msg('msg: '+m.data); };
 	websocket.onclose = function(e) { msg('closed with code '+e.code); };
-	
+	function toggleActive(id){
+		if(!document.getElementById(id).classList.contains('active'))
+		{
+			var i;
+			for(i = 1; i < 6; i++)
+			{
+				document.getElementById(i).classList.remove('active');
+			}
+			document.getElementById(id).classList.add('active');
+		}
+		
+		
+	};
 	function send(m){ websocket.send(m); };
 	function msg(m){ document.getElementById("msg").innerHTML += '<br>' + m; };
+
+	var $content = $('.menu-content');
+
+	function showContent(type) {
+	  $content.hide().filter('.' + type).show();
+	}
+
+	$('.menu').on('click', '.menu-btn', function(e) {
+	  showContent(e.currentTarget.hash.slice(1));
+	  e.preventDefault();
+	}); 
+
+	// show 'about' content only on page load (if you want)
+	showContent('about');
+	
  </script>
 </head>
 
 <body>
 
 
-<body>
+<body class="news">
 	Homey v1.0<br><br>
+
+  <header>
+    <div class="nav">
+      <ul>
+        <li id="1"  onclick="toggleActive(this.id)" ><a href="#">Room/House Information</a></li>
+        <li id="2" onclick="toggleActive(this.id)" class="active"><a  href="#">Home2</a></li>
+        <li id="3" onclick="toggleActive(this.id)"><a href="#">Home3</a></li>
+        <li id="4" onclick="toggleActive(this.id)"><a href="#">Home4</a></li>
+        <li id="5" onclick="toggleActive(this.id)"><a href="#">Home5</a></li>
+      </ul>
+    </div>
+  </header>
+	
+		<ul class="menu">
+		    <li><a href="#about" class="menu-btn">About</a></li>
+		    <li><a href="#contact" class="menu-btn">Contact</a></li>
+		    <li><a href="#misc" class="menu-btn">Misc</a></li>
+		  </ul>
+
+		  <div class="menu-content about">About</div>
+		  <div class="menu-content contact">Contact</div>
+		  <div class="menu-content misc">Misc</div>
+		  
+
+
 	<button style="height:100px; width:200px;" onclick="send('TIMETOPARTY!')">All Lights On!</button>
 	<button style="height:100px; width:200px;" onclick="send('TIMETOPARTY2!')">Toggle The Lights!</button>
 	<br><br>

@@ -1,7 +1,7 @@
 import VR
 from PresenceSensor import PresenceSensor
 
-openLeft = {1:[0,1,0], -1:[0,-1,0], 100:[0,1,0], -100:[0,-1,0]}
+openLeft = {1:[0,0,1], -1:[0,0,-1], 100:[0,0,1], -100:[0,0,-1]}
 openRight = {1:[-1,0,0], -1:[1,0,0], 100:[0,0,-1], -100:[0,0,1]}
 
 
@@ -31,7 +31,7 @@ class Bordcomputer(object):
 		self.pathClose = VR.Path()
 		
 		self.direction = self.transform.getDir()
-		dirIndex = self.direction[0] * 100 + self.direction[1]
+		dirIndex = self.direction[1] * 100 + self.direction[2]
 		
 		if not sliding:
 			if openSide == "left":

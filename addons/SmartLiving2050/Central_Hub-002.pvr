@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Scene name_suffix="0" base_name="Central_Hub" name_space="Scene" loading_time="12858">
+<Scene name_suffix="0" base_name="Central_Hub" name_space="Scene" loading_time="12290">
   <Objects>
     <Object base_name="Root" name_space="__global__" name_suffix="0" persistency="666" pickable="0" type="Object" unique="1" visible="1">
       <Object ambient="0.3 0.3 0.3 1" base_name="light" beacon="Headlight_beacon.1" diffuse="1 1 1 1" lightType="point" name_space="__global__" name_suffix="0" on="1" persistency="666" pickable="0" shadow="0" shadowColor="0.1 0.1 0.1 1" shadowMapRes="2048" specular="0.0999924 0.0999924 0.0999924 0" type="Light" unique="1" visible="1">
-        <Object accept_root="1" aspect="1" at="-0.481924 1.10781 -3.16476" at_dir="0" base_name="Default" far="512" fov="1.0472" from="-4.89212 1.84134 -1.555" name_space="__global__" name_suffix="1" near="0.1" persistency="666" pickable="0" scale="1 1 1" type="Camera" unique="1" up="0 0.999984 0" visible="1">
+        <Object accept_root="1" aspect="1" at="0.483675 1.10781 -4.79224" at_dir="0" base_name="Default" far="512" fov="1.0472" from="-2.96087 1.84134 -1.60385" name_space="__global__" name_suffix="1" near="0.1" persistency="666" pickable="0" scale="1 1 1" type="Camera" unique="1" up="0 0.999984 0" visible="1">
           <Object at="0 0 -1" at_dir="1" base_name="Headlight_beacon" from="0 0 0" light="light" name_space="__global__" name_suffix="1" persistency="666" pickable="0" scale="1 1 1" type="LightBeacon" unique="1" up="0 1 0" visible="1">
             <constraint active="1" cR="0 1 0" cR_local="0" cR_mode="0" cT="0 1 0" cT_local="0" cT_mode="0" persistency="666"/>
           </Object>
@@ -35,7 +35,8 @@
 	if(m == 'Find The Person!'):
 		for room in VR.hub.rooms:
 			for ids in room.presentIds:
-				print room.name + " " + str(ids)   
+				print room.name + " " + str(ids)
+	print m 
 </core>
       <trig type="on_device" dev="server1" state="Released" param="" key="-1" name_suffix="15" base_name="trigger" name_space="__global__"/>
     </Script>
@@ -113,52 +114,38 @@
       <core>
 	import VR
 	from core.Bordcomputer import Bordcomputer 
-	
-	  
+	        
+  
 	for i in reversed(range(len(VR.bordcomputers))):
 		VR.bordcomputers[i].destroy() 
-	                 
+	               
+	cam = VR.find('Default.1')
 	VR.bordcomputers = []
-	     
+	
 	#Load Bordcomputer 1]
-	bordcomputer = VR.Sprite("asdadas")
-	bordcomputer.setPose([-1.7,0.87,-3.23],[0,1,0],[0,-1,1])
+	bordcomputer = VR.Sprite("Bordcomputer")
+	bordcomputer.setPose([-1.7,0.87,-3.23],[-cam.getDir()[0],0,1],[0,-1,0])
 	bordcomputer.setSize(1.5, 1.5)
 	  
-	#Material does not work, bcs the img is not transperant
-	bordcomputer.setMaterial(VR.materials["Bordcomputer"])
+	
 	bordcomputer.webOpen('http://localhost:5500/web/bordcomputer.html', 1000, 2)
 	VR.Scene.addChild(bordcomputer)
 	
 	VR.hub.addBordcomputer(Bordcomputer("Bordcomputer", bordcomputer, True, "left"))
 	VR.bordcomputers.append(bordcomputer)
 	
-	                             
-	  
-	 
-	cam = VR.find('Default.1')
-	
 	key = dev.getKey()
 
 	if key == ord("w"):
-		bordcomputer.setPose([-1.7,0.87,-3.23],[-cam.getDir()[0],0, 1],[0,-1,0])
+		bordcomputer.setAt(cam.getFrom())
 	if key == ord("s"):
-		bordcomputer.setPose([-1.7,0.87,-3.23],[-cam.getDir()[0],0, 1],[0,-1,0])
+		bordcomputer.setAt(cam.getFrom())
 	if key == ord("a"):
-		bordcomputer.setPose([-1.7,0.87,-3.23],[-cam.getDir()[0],0, 1],[0,-1,0])
+		bordcomputer.setAt(cam.getFrom())
 	if key == ord("d"):
-		bordcomputer.setPose([-1.7,0.87,-3.23],[-cam.getDir()[0],0, 1],[0,-1,0])
-	
-	
-	
-				
-	
-				
-	
-	
-	 
+		bordcomputer.setAt(cam.getFrom())
 </core>
-      <trig type="on_device" dev="keyboard" state="Released" param="" key="-1" name_suffix="14" base_name="trigger" name_space="__global__"/>
+      <trig type="on_device" dev="keyboard" state="Released" param="" key="-1" name_suffix="11" base_name="trigger" name_space="__global__"/>
     </Script>
     <Script base_name="createDoors" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
       <core>
@@ -313,7 +300,7 @@
 	from core.Radiator import Radiator
 	from core.Room import Room
 	from middleware.PolyVrMiddlewareAdapter import PolyVrMiddlewareAdapter
-
+ 
 	
 	# Prepare lists
 	VR.presenceSensors = []
@@ -463,11 +450,11 @@
 	VR.materials[mat.getName()] = mat
 	
 	
-	mat = VR.Material("Bordcomputer")
+	mat = VR.Material("Bordcomputerweb")
 	mat.setAmbient(0.2,0.2,0.2)
-	mat.setDiffuse(0.5,0.5,0.5)
-	mat.setSpecular(0.6,0.6,0.6)
-	mat.setTransparency(0)
+	mat.setDiffuse(0.999,0.973,0.863)
+	mat.setSpecular(0.999,0.973,0.863)
+	mat.setTransparency(0.5)
 	VR.materials[mat.getName()] = mat
 </core>
     </Script>
