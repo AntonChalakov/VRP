@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Scene name_suffix="0" base_name="Central_Hub" name_space="Scene" loading_time="15719">
+<Scene name_suffix="0" base_name="Central_Hub" name_space="Scene" loading_time="12002">
   <Objects>
     <Object base_name="Root" name_space="__global__" name_suffix="0" persistency="666" pickable="0" type="Object" unique="1" visible="1">
       <Object ambient="0.3 0.3 0.3 1" base_name="light" beacon="Headlight_beacon.1" diffuse="1 1 1 1" lightType="point" name_space="__global__" name_suffix="0" on="1" persistency="666" pickable="0" shadow="0" shadowColor="0.1 0.1 0.1 1" shadowMapRes="2048" specular="0.0999924 0.0999924 0.0999924 0" type="Light" unique="1" visible="1">
-        <Object accept_root="1" aspect="1" at="0.483675 1.10781 -4.79224" at_dir="0" base_name="Default" far="512" fov="1.0472" from="-2.96087 1.84134 -1.60385" name_space="__global__" name_suffix="1" near="0.1" persistency="666" pickable="0" scale="1 1 1" type="Camera" unique="1" up="0 0.999984 0" visible="1">
+        <Object accept_root="1" aspect="1" at="-1.19462 0.440335 -3.89666" at_dir="0" base_name="Default" far="512" fov="1.0472" from="-2.45735 1.84134 -1.79671" name_space="__global__" name_suffix="1" near="0.1" persistency="666" pickable="0" scale="1 1 1" type="Camera" unique="1" up="0 0.999984 0" visible="1">
           <Object at="0 0 -1" at_dir="1" base_name="Headlight_beacon" from="0 0 0" light="light" name_space="__global__" name_suffix="1" persistency="666" pickable="0" scale="1 1 1" type="LightBeacon" unique="1" up="0 1 0" visible="1">
             <constraint active="1" cR="0 1 0" cR_local="0" cR_mode="0" cT="0 1 0" cT_local="0" cT_mode="0" persistency="666"/>
           </Object>
@@ -19,25 +19,50 @@
   <Scripts persistency="666">
     <Script base_name="Script" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
       <core>
+	import json
 	import VR 
+	from core.Device import Device
+	if VR.bordcomputers:
+		bordcomputer = VR.bordcomputers[0]
+	
+	
+	cam = VR.find('Default.1')
+	
 	m = dev.getMessage()
+	key = dev.getKey()
+	
 	if(m == 'TIMETOPARTY!'):
 		for room in VR.hub.rooms:
 			for lamp in room.lamps:
 				lamp.switchOn()
+			#room.set_dirty(Device(room.name, "Room", False, room.name, False))
 	if(m == 'TIMETOPARTY2!'):
 		for room in VR.hub.rooms:
-			for lamp in room.lamps:	
-				lamp.toggle()
+			numberLightsOn = 0
+			for	lamp in room.lamps:
+					if(lamp.isOn):
+						numberLightsOn += 1
+					
+			dev.answer(dev.getKey(),json.dumps({ "room":room.name, "numberLights":numberLightsOn}))
+		
 	if(m == 'Toggle Doors!'):
 		for door in VR.hub.doors:
-			door.toggle()		
+			door.toggle()
+			print VR.hub.clock.get()		
 	if(m == 'Find The Person!'):
 		for room in VR.hub.rooms:
 			for ids in room.presentIds:
 				print room.name + " " + str(ids)
-	print m 
+	if key == ord("w"):
+		bordcomputer.setAt(cam.getFrom())
+	if key == ord("s"):
+		bordcomputer.setAt(cam.getFrom())
+	if key == ord("a"):
+		bordcomputer.setAt(cam.getFrom())
+	if key == ord("d"):
+		bordcomputer.setAt(cam.getFrom())
 </core>
+      <trig type="on_device" dev="keyboard" state="Released" param="" key="-1" name_suffix="14" base_name="trigger" name_space="__global__"/>
       <trig type="on_device" dev="server1" state="Released" param="" key="-1" name_suffix="15" base_name="trigger" name_space="__global__"/>
     </Script>
     <Script base_name="camera" group="no group" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
@@ -114,8 +139,8 @@
       <core>
 	import VR
 	from core.Bordcomputer import Bordcomputer 
-	        
-   
+	          
+     
 	for i in reversed(range(len(VR.bordcomputers))):
 		VR.bordcomputers[i].destroy() 
 	               
@@ -134,18 +159,8 @@
 	VR.hub.addBordcomputer(Bordcomputer("Bordcomputer", bordcomputer, True, "left"))
 	VR.bordcomputers.append(bordcomputer)
 	
-	key = dev.getKey()
-
-	if key == ord("w"):
-		bordcomputer.setAt(cam.getFrom())
-	if key == ord("s"):
-		bordcomputer.setAt(cam.getFrom())
-	if key == ord("a"):
-		bordcomputer.setAt(cam.getFrom())
-	if key == ord("d"):
-		bordcomputer.setAt(cam.getFrom())
+	
 </core>
-      <trig type="on_device" dev="keyboard" state="Released" param="" key="-1" name_suffix="11" base_name="trigger" name_space="__global__"/>
     </Script>
     <Script base_name="createDoors" group="init" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
       <core>
@@ -331,6 +346,13 @@
 	apartment.setScale(1,1,1)
 	
 	
+	clock = VR.Sprite('Clock')
+	clock.setPose([-2,2.2,-4.23],[0,0,1],[0,-1,1])
+	clock.setSize(0.6, 0.3)
+	#clock.webOpen('http://localhost:5500/clock.html', 1000, 2)
+	#VR.Scene.addChild(clock)
+	
+	
 	
 	roomNames = ["Hallway1", "Hallway2", "Livingroom", "Kitchen",
 				 "Bathroom", "GuestBathR", "Bedroom", "KidsRoom"]
@@ -367,6 +389,7 @@
 	VR.doors = []
 	VR.bordcomputers = []
 	VR.createDoors()
+	VR.createBordcomputer()
 	VR.furniture = []
 	VR.loadFurniture()
 </core>
@@ -754,9 +777,8 @@
 			VR.hub.clocks.append(dev.getKey())
 			dev.answer(dev.getKey(), 'SUBSCRIBED')
 	else:
-		VR.mw.recv(dev)
+		#VR.mw.recv(dev)
 </core>
-      <trig type="on_device" dev="server1" state="Released" param="" key="-1" name_suffix="2" base_name="trigger" name_space="__global__"/>
     </Script>
     <Script base_name="zTestDoors" group="testScripts" name_space="__script__" name_suffix="0" persistency="666" server="server1" type="Python" unique="1">
       <core>

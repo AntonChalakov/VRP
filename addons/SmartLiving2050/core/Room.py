@@ -1,4 +1,5 @@
 import VR
+from Device import Device
 
 class Room:
 	""" Definiert einen logischen Raum in dem Smart-Home.
@@ -24,6 +25,7 @@ class Room:
 		self.presentIds = []
 		self.lamps = []		# physical lamp meshes
 		self.radiators = []
+		self.clean = True
 
 	def switchAllLamps(self, on):
 		""" Schalte alle Lampen in diesem Raum um.
@@ -47,3 +49,8 @@ class Room:
 		@param lamp: Dem Raum hinzuzufuegende Lampe (Lamp)
 		"""
 		self.lamps.append(lamp)
+
+	def set_dirty(self,device):
+		self.clean = False
+		VR.hub.createAppointment(Device(self.name, "Room", False, self.name, False))
+

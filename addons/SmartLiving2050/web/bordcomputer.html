@@ -57,15 +57,52 @@
 	    display: inline-block;
 	    margin-right: -4px;
 	  }
+	.container {
+	    width: 100%;
+	    border: 1px solid black;
+	    display: table;
+	    table-layout: fixed;
+	}
+	.divSquare{
+        	width:48%; height:200px; margin:4px; border:1px solid black; float: left
+   	 }
+	.divRow{
+        	width:100%; height:19%; border:1px solid black; float: left; overflow: auto; font-family: Arial Black;font-weight: bold; 			vertical-align: text-center; font-size: 28px; 
+   	 }
 	
 	}
+	
  </style>
   <script>
+	var rooms = {"Hallway1":0, "Hallway2":0, "Livingroom":0, "Kitchen":0,"Bathroom":0, "GuestBathR":0, "Bedroom":0, "KidsRoom":0};
+	var people = {"Hallway1":0, "Hallway2":0, "Livingroom":0, "Kitchen":0,"Bathroom":0, "GuestBathR":0, "Bedroom":0, "KidsRoom":0};
 	var websocket = new WebSocket('ws://localhost:5500');
-	websocket.onopen = function() { msg('open'); };
-	websocket.onerror = function(e) { msg('error'); };
-	websocket.onmessage = function(m) { if(m.data) msg('msg: '+m.data); };
+	websocket.onopen = function() {  };
+	websocket.onerror = function() { msg('error'); };
+	for(key in rooms)
+	{
+		jsondata[key].num = rooms[key];	
+	}
+	websocket.onmessage = function(m) 
+			{
+				var obj = JSON.parse(m.data);
+				var i;
+				for(key in rooms)
+				{
+					if(key == obj.room)
+					{
+						rooms[key] = obj.numberLights;
+						people[key] 
+						updateLights(key);	
+					}			
+				}
+			 };
 	websocket.onclose = function(e) { msg('closed with code '+e.code); };
+	function updateLights(room)
+	{
+		document.getElementById(room + "Lights").innerHTML = rooms[room];	
+	}
+
 	function toggleActive(id){
 		if(!document.getElementById(id).classList.contains('active'))
 		{
@@ -82,7 +119,7 @@
 		
 	};
 	function send(m){ websocket.send(m); };
-	function msg(m){ document.getElementById("msg").innerHTML += '<br>' + m; };
+	function msg(m){ document.getElementById("msg").innerHTML += m; };
 
 	
  </script>
@@ -92,13 +129,13 @@
 
 
 <body>
-	Homey v1.7<br><br>
+	<div align="center" style="font:20px Arial">Homey v1.7</div>
 
   <header>
     <div class="nav">
       <ul>
-        <li id="1"  onclick="toggleActive(this.id)" class="active"><a href="#">Room/House Information</a></li>
-        <li id="2" onclick="toggleActive(this.id)"><a  href="#">Home2</a></li>
+        <li id="1"  onclick="toggleActive(this.id)" class="active"><a href="#">House Information</a></li>
+        <li id="2" onclick="toggleActive(this.id)"><a  href="#">House Control</a></li>
         <li id="3" onclick="toggleActive(this.id)"><a href="#">Home3</a></li>
         <li id="4" onclick="toggleActive(this.id)"><a href="#">Home4</a></li>
         <li id="5" onclick="toggleActive(this.id)"><a href="#">Home5</a></li>
@@ -106,20 +143,87 @@
     </div>
   </header>
 	
-		  <div id="content1" style="display:none">Content1		</div>
-		  <div id="content2" style="display:none">Content2</div>
+	<div id="content1">
+		<div class="container">
+			<div class="divSquare" id="Livingroom">
+				<div class="divRow" align="center">Livingroom</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Light that are on :</div>
+					<div id="LivingroomLights" style="float:left; width:25%">0</div>
+				</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Number of people :</div>
+					<div id="LivingroomPeople" style="float:left; width:25%">0</div>
+				</div>
+				<div class="divRow"></div>
+				<div class="divRow"></div>
+			</div>
+			<div class="divSquare" id="Kitchen">
+				<div class="divRow" align="center">Kitchen</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Light that are on :</div>
+					<div id="KitchenLights" style="float:left; width:25%">0</div>				
+				</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Number of people :</div>
+					<div id="KitchenPeople" style="float:left; width:25%">0</div>				
+				</div>
+				<div class="divRow"></div>
+				<div class="divRow"></div>
+			</div>
+			<div style='clear:both'></div>
+			<div class="divSquare" id="Bedroom">
+				<div class="divRow" align="center">Bedroom</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Light that are on :</div>
+					<div id="BedroomLights" style="float:left; width:25%">0</div>
+				</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Number of people :</div>
+					<div id="BedroomPeople" style="float:left; width:25%">0</div>
+				</div>
+				<div class="divRow"></div>
+				<div class="divRow"></div>
+			</div>
+			<div class="divSquare" id="KidsRoom">
+				<div class="divRow" align="center">Kidsroom</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Light that are on :</div>
+					<div id="KidsRoomLights" style="float:left; width:25%">0</div>		
+				</div>
+				<div class="divRow">
+					<div style="float:left; width:75%">Number of people :</div>
+					<div id="KidsRoomPeople" style="float:left; width:25%">0</div>
+				</div>
+				<div class="divRow"></div>
+				<div class="divRow"></div>
+			</div>
+		</div>		
+	</div>
+		  <div id="content2" style="display:none">
+			<div class="divSquare" id="Bedroom">
+			<button style="height:100%; width:100%;" onclick="send('TIMETOPARTY!')">All Lights On!</button>
+			</div>
+			<div class="divSquare" id="Bedroom2">
+				<button style="height:100%; width:100%;" onclick="send('Toggle Doors!')">Toggle The Doors!</button>
+			</div>
+			<div style='clear:both'></div>
+			<div class="divSquare" id="Bedroom3">
+				<button style="height:100%; width:100%;" onclick="send('TIMETOPARTY2!')">Toggle The Lights!</button>
+			</div>
+			<div class="divSquare" id="Bedroom4">
+				<button style="height:100%; width:100%;" onclick="send('Find The Person!')">Find My Homies!</button>
+			</div>
+			
+			<br><br>
+			
+			
+		</div>
 		  <div id="content3" style="display:none">Content3</div>
 		  <div id="content4" style="display:none">Content4</div>
 		  <div id="content5" style="display:none">Content5</div>
 		  
-
-
-	<button style="height:100px; width:200px;" onclick="send('TIMETOPARTY!')">All Lights On!</button>
-	<button style="height:100px; width:200px;" onclick="send('TIMETOPARTY2!')">Toggle The Lights!</button>
-	<br><br>
-	<button style="height:100px; width:200px;" onclick="send('Toggle Doors!')">Toggle The Doors!</button>
-	<button style="height:100px; width:200px;" onclick="send('Find The Person!')">Find My Homies!</button>
-	<div id="msg"></div>
+	<div id="msg" style="font-size: 150px"></div>
 
 
 </body>

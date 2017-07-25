@@ -210,31 +210,52 @@ class Hub:
 		startTime = [int(random.random()*7 + 8),0]
 		endTime = [startTime[0] + 3, 0]
 		
-		# Simulate recipience of personal identification of repairing engineer
-		idFound = False
-		engineerId = 100
-		'''while not idFound:
-			engineerId = int(random.random()*100000000)
-			if engineerId not in self.persons:
-				idFound = True'''
-				
-		engineerData = [engineerId, "Mario Klempnertyp"]
+		if(brokenDevice._type == "Room"):
+			idFound = False
+			cleaningServiceId = 100
+			cleaningServiceData = [cleaningServiceId, "Anton Tolietputzer"]
 		
-		# Create appropriate access group and appoint access right for appointment time frame
-		groupName = "Repair Service " + brokenDevice.type() + " " + brokenDevice.id()
-		engineerGroup = AccessGroup(groupName, False)
-		engineerGroup.addAccessRight(appointmentDay, startTime, endTime, [brokenDevice.room()])
-		self.accessGroups[engineerGroup.name] = engineerGroup
+			# Create appropriate access group and appoint access right for appointment time frame
+			groupName = "Cleaning Service "  + brokenDevice.id()
+			cleaningServiceGroup = AccessGroup(groupName, False)
+			cleaningServiceGroup.addAccessRight(appointmentDay, startTime, endTime, [brokenDevice.room()])
+			self.accessGroups[cleaningServiceGroup.name] = cleaningServiceGroup
 		
-		engineer = Person(engineerData[0], engineerGroup, engineerData[1])
-		self.persons[engineerId] = engineer
+			cleaningService = Person(cleaningServiceData[0], cleaningServiceGroup, cleaningServiceData[1])
+			self.persons[cleaningServiceId] = cleaningService
 		
 
-		print "Appointment for repair of " + brokenDevice.__class__.__name__ + " in the " + brokenDevice.room() + ": " \
-			+ days[appointmentDay] + ", between " + str(startTime[0]) + ":00 and " + str(endTime[0]) + ":00."
-		print "Your technician will be " + engineer.name + ", ID: " + str(engineer.idNumber) + "."
+			print "Appointment for cleaning of " + brokenDevice.room() + ": " \
+				+ days[appointmentDay] + ", between " + str(startTime[0]) + ":00 and " + str(endTime[0]) + ":00."
+			print "Your cleaning service will be " + cleaningService.name + ", ID: " + str(cleaningService.idNumber) + "."
 			
-		brokenDevice.set_repairAppointment(appointmentDay, startTime, endTime)
+			brokenDevice.set_repairAppointment(appointmentDay, startTime, endTime)
+		else:
+			# Simulate recipience of personal identification of repairing engineer
+			idFound = False
+			engineerId = 100
+			'''while not idFound:
+				engineerId = int(random.random()*100000000)
+				if engineerId not in self.persons:
+					idFound = True'''
+				
+			engineerData = [engineerId, "Mario Klempnertyp"]
+		
+			# Create appropriate access group and appoint access right for appointment time frame
+			groupName = "Repair Service " + brokenDevice.type() + " " + brokenDevice.id()
+			engineerGroup = AccessGroup(groupName, False)
+			engineerGroup.addAccessRight(appointmentDay, startTime, endTime, [brokenDevice.room()])
+			self.accessGroups[engineerGroup.name] = engineerGroup
+		
+			engineer = Person(engineerData[0], engineerGroup, engineerData[1])
+			self.persons[engineerId] = engineer
+		
+
+			print "Appointment for repair of " + brokenDevice.__class__.__name__ + " in the " + brokenDevice.room() + ": " \
+				+ days[appointmentDay] + ", between " + str(startTime[0]) + ":00 and " + str(endTime[0]) + ":00."
+			print "Your technician will be " + engineer.name + ", ID: " + str(engineer.idNumber) + "."
+			
+			brokenDevice.set_repairAppointment(appointmentDay, startTime, endTime)
 
 	def hasAccess(self, personId, door):
 		""" Pruefe ob die gegebene Person zum gegebenen Zeitpunkt Zugang zur gegebenen Tuer hat.

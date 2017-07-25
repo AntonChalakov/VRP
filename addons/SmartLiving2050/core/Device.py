@@ -95,6 +95,15 @@ class Device(object):
 		else:
 			self.set_broken()
 
+	def set_dirty(self):
+		if not self._ok:
+			print("{0} {1} in {2} is already dirty.".format(self._type, self._id, self._room))
+		else:
+			print("{0} {1} in {2} is dirty.".format(self._type, self._id, self._room))
+			self._ok = False
+			self.sendEvent()
+		
+
 	def set_geometry(self, geometry):
 		""" Setter fuer _geometry
 
@@ -108,7 +117,7 @@ class Device(object):
 		""" Rufe das zugehoerige Event auf dem zentralen Hub auf.
 		"""
 		VR.hub.eventDevice(self)
-		
+	
 	def get_repairAppointment(self):
 		""" Gebe den bestehenden Eintrag fuer den Reparaturtermin des Geraets aus.
 
